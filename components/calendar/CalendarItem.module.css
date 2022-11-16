@@ -1,0 +1,61 @@
+.item {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.025);
+  box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.05);
+  padding: 0.5rem;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.info {
+  display: flex;
+  padding: 0.5rem;
+  flex-direction: column;
+}
+
+.action button {
+  margin-right: 0.5rem;
+}
+
+.progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 5px;
+  background-color: var(--color-light);
+  transition: width 1s ease-in-out;
+}
+
+.open {
+  animation: pop-in 0.25s ease-in-out forwards;
+}
+
+.close {
+  animation: pop-out 0.25s ease-in-out forwards;
+}
+
+@keyframes pop-in {
+  from {
+    transform: translateX(-50%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pop-out {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(50%);
+    opacity: 0;
+  }
+}

@@ -1,0 +1,36 @@
+.header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  padding: 0 10%;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: transparent;
+  backdrop-filter: saturate(100%) blur(1rem);
+  z-index: 5;
+}
+
+.header > a {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.nav {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.nav div {
+  transition: all 0.25s ease-in-out;
+  padding: 5px 0;
+  border-bottom: 1px solid white;
+}
+
+.nav div:hover,
+.nav div:active,
+.active {
+  border-color: var(--main-color) !important;
+}
