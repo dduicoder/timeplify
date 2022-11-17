@@ -6,7 +6,7 @@ import { faX, faCheck } from "@fortawesome/free-solid-svg-icons";
 
 import classes from "./CalendarItem.module.css";
 
-type calendar = {
+type CalendarType = {
   id: string;
   text: string;
   start: string;
@@ -14,7 +14,7 @@ type calendar = {
 };
 
 type CalendarItemType = {
-  calendar: calendar;
+  calendar: CalendarType;
   onDeleteCalendar: (id: string) => void;
 };
 

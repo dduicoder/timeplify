@@ -7,9 +7,10 @@ import "../styles/globals.css";
 import NotificationProvider from "../components/notification/NotificationProvider";
 import Header from "../components/layouts/Header";
 import Footer from "../components/layouts/Footer";
+import Head from "next/head";
 
-const app = ({ Component, pageProps }: AppProps) => {
-  const [loading, setLoading] = useState(false);
+const App = ({ Component, pageProps }: AppProps) => {
+  const [loading, setLoading] = useState<boolean>(false);
 
   const router = useRouter();
 
@@ -23,16 +24,21 @@ const app = ({ Component, pageProps }: AppProps) => {
   });
 
   return (
-    <NotificationProvider>
-      <div id="overlays"></div>
-      {loading && <div className="loader" />}
-      <Header />
-      <main>
-        <Component {...pageProps} />
-      </main>
-      <Footer />
-    </NotificationProvider>
+    <>
+      <Head>
+        <link rel="shortcut icon" href="../static/favicon.ico" />
+      </Head>
+      <NotificationProvider>
+        <div id="overlays"></div>
+        {loading && <div className="loader" />}
+        <Header />
+        <main>
+          <Component {...pageProps} />
+        </main>
+        <Footer />
+      </NotificationProvider>
+    </>
   );
 };
 
-export default app;
+export default App;

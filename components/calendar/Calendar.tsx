@@ -6,17 +6,17 @@ import classes from "./Calendar.module.css";
 import CalendarItem from "./CalendarItem";
 import CalendarModal from "./CalendarModal";
 
-type calendar = {
+type CalendarType = {
   id: string;
   text: string;
   start: string;
   end: string;
 };
 
-type Action =
+type ActionType =
   | {
       type: "ADD_CALENDAR";
-      payload: calendar;
+      payload: CalendarType;
     }
   | { type: "REMOVE_CALENDAR"; id: string };
 
@@ -24,7 +24,7 @@ const Calendar: FC<{ date: string }> = ({ date }) => {
   const [showModal, setShowModal] = useState<boolean>(false);
 
   const [calendars, setCalendar] = useReducer(
-    (calendars: calendar[], action: Action) => {
+    (calendars: CalendarType[], action: ActionType) => {
       switch (action.type) {
         case "ADD_CALENDAR":
           return [...calendars, { ...action.payload }];
@@ -65,7 +65,7 @@ const Calendar: FC<{ date: string }> = ({ date }) => {
       />
       <h1>Calendar of {today.toLocaleDateString()}</h1>
       <ul className={classes.list}>
-        {calendars.map((item: calendar, i: number) => (
+        {calendars.map((item: CalendarType, i: number) => (
           <CalendarItem
             key={i}
             calendar={item}

@@ -1,4 +1,4 @@
-import { useState, useEffect, FC } from "react";
+import { useState, useEffect, FC, useCallback } from "react";
 
 import classes from "./Notification.module.css";
 
@@ -8,12 +8,12 @@ type NoticeType = {
   message: string;
 };
 
-type NotificationProps = {
-  deleteNotice: (id: string) => void;
+type PropsType = {
+  deleteNotification: (id: string) => void;
   note: NoticeType;
 };
 
-const Notification: FC<NotificationProps> = ({ deleteNotice, note }) => {
+const Notification: FC<PropsType> = ({ deleteNotification, note }) => {
   const [exit, setExit] = useState<boolean>(false);
   const [width, setWidth] = useState<number>(0);
   const [intervalID, setIntervalID] = useState<any>();
@@ -27,30 +27,27 @@ const Notification: FC<NotificationProps> = ({ deleteNotice, note }) => {
       });
     }, 200);
 
-    // console.log(interId);
-
     setIntervalID(interId);
   };
 
   const pauseTimer = () => {
-    // console.log(intervalID);
     clearInterval(intervalID);
   };
 
-  const closeNotification = () => {
-    pauseTimer();
+  const closeNotification = useCallback(() => {
+    clearInterval(intervalID);
     setExit(true);
 
     setTimeout(() => {
-      deleteNotice(id);
+      deleteNotification(id);
     }, 250);
-  };
+  }, [intervalID, deleteNotification, id, setExit]);
 
   useEffect(() => {
     if (width >= 100) {
       closeNotification();
     }
-  }, [width]);
+  }, [width, closeNotification]);
 
   useEffect(() => {
     startTimer();

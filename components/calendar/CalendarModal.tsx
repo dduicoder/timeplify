@@ -11,20 +11,21 @@ import Portal from "../UI/Portal";
 import classes from "./CalendarModal.module.css";
 import { SyntheticEvent, useRef } from "react";
 
-type calendar = {
+type CalendarType = {
   text: string;
   start: string;
   end: string;
 };
 
-type CalendarModalProps = {
+type PropsType = {
   show: boolean;
   close: () => void;
-  onAddCalendar: (data: calendar) => void;
+  onAddCalendar: (data: CalendarType) => void;
 };
 
-const CalendarModal = ({ show, close, onAddCalendar }: CalendarModalProps) => {
+const CalendarModal = ({ show, close, onAddCalendar }: PropsType) => {
   const ref = useRef<HTMLDivElement>(null);
+
   const notice = useNotification();
 
   const submitHandler = (event: SyntheticEvent) => {

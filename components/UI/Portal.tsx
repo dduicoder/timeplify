@@ -9,7 +9,7 @@ const Portal: FC<{ children: ReactNode }> = ({ children }) => {
   }, [setMounted]);
 
   return mounted
-    ? createPortal(children, document.getElementById("overlays"))
+    ? createPortal(children, document.getElementById("overlays")!)
     : null;
 };
 

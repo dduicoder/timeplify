@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { FC } from "react";
 
-const Index: FC = () => {
+const CalendarHome: FC = () => {
   const router = useRouter();
 
   const today = new Date()
@@ -14,13 +14,12 @@ const Index: FC = () => {
   };
 
   return (
-    <section>
-      <h1>Timeplifey</h1>
+    <div>
       <button className="btn-flat" onClick={onClick}>
-        Todays Calendar
+        Today&apos;s Calendar
       </button>
-    </section>
+    </div>
   );
 };
 
-export default Index;
+export default CalendarHome;

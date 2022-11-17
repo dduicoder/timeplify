@@ -1,8 +1,16 @@
+import Head from "next/head";
 import { FC } from "react";
 import Index from "../components/layouts/Index";
 
 const Home: FC = () => {
-  return <Index />;
+  return (
+    <>
+      <Head>
+        <title>Timeplifey</title>
+      </Head>
+      <Index />
+    </>
+  );
 };
 
 export default Home;

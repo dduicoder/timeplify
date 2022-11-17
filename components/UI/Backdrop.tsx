@@ -13,7 +13,7 @@ type BackdropProps = {
 };
 
 const Backdrop: FC<BackdropProps> = ({ show, close }) => {
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   return (
     <Portal>

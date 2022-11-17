@@ -1,4 +1,11 @@
-import { createContext, FC, ReactNode, useContext, useReducer } from "react";
+import {
+  createContext,
+  FC,
+  ReactNode,
+  useContext,
+  useReducer,
+  Dispatch,
+} from "react";
 import { v4 } from "uuid";
 
 import Notification from "./Notification";
@@ -11,24 +18,20 @@ type NoticeType = {
   message: string;
 };
 
-const NotificationContext = createContext<NoticeType>({
-  id: "",
-  type: "",
-  message: "",
-});
-
-type Action =
+type ActionType =
   | {
       type: "ADD_NOTIFICATION";
       payload: NoticeType;
     }
   | { type: "REMOVE_NOTIFICATION"; id: string };
 
+const NotificationContext = createContext<Dispatch<ActionType>>(() => null);
+
 const NotificationProvider: FC<{
   children: ReactNode;
 }> = ({ children }) => {
   const [state, dispatch] = useReducer(
-    (state: NoticeType[], action: Action) => {
+    (state: NoticeType[], action: ActionType) => {
       switch (action.type) {
         case "ADD_NOTIFICATION":
           return [...state, { ...action.payload }];
@@ -41,7 +44,7 @@ const NotificationProvider: FC<{
     []
   );
 
-  const deleteNotice = (id: string) => {
+  const deleteNotification = (id: string) => {
     dispatch({
       type: "REMOVE_NOTIFICATION",
       id,
@@ -55,7 +58,7 @@ const NotificationProvider: FC<{
           return (
             <Notification
               key={note.id}
-              deleteNotice={deleteNotice}
+              deleteNotification={deleteNotification}
               note={note}
             />
           );

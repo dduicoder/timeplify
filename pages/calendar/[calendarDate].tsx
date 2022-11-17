@@ -1,4 +1,5 @@
 import { GetStaticPropsContext } from "next";
+import Head from "next/head";
 import { FC } from "react";
 
 import Calendar from "../../components/calendar/Calendar";
@@ -6,7 +7,16 @@ import Calendar from "../../components/calendar/Calendar";
 const CalendarPage: FC<{
   date: string;
 }> = ({ date }) => {
-  return <Calendar date={date} />;
+  const titleText = `Calendar of ${date}`;
+
+  return (
+    <>
+      <Head>
+        <title>{titleText}</title>
+      </Head>
+      <Calendar date={date} />
+    </>
+  );
 };
 
 export default CalendarPage;
