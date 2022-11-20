@@ -1,5 +1,4 @@
 import { FC, useRef } from "react";
-import { v4 } from "uuid";
 
 import { CSSTransition } from "react-transition-group";
 
@@ -22,7 +21,7 @@ const Backdrop: FC<BackdropProps> = ({ show, close }) => {
         mountOnEnter
         unmountOnExit
         in={show}
-        timeout={{ enter: 250, exit: 250 }}
+        timeout={250}
         classNames={{
           enterActive: classes.open,
           exitActive: classes.close,

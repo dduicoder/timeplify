@@ -25,7 +25,7 @@ const Notification: FC<PropsType> = ({ deleteNotification, note }) => {
       setWidth((prevData) => {
         return prevData + 5;
       });
-    }, 200);
+    }, 150);
 
     setIntervalID(interId);
   };

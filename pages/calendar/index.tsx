@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { FC } from "react";
+
 import CalendarHome from "../../components/calendar/Index";
 
 const CalendarHomePage: FC = () => {

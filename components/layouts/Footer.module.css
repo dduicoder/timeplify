@@ -1,6 +1,45 @@
 .footer {
   width: 100%;
-  background-color: rgb(75, 75, 75);
+  padding: 1rem;
   color: white;
-  padding: 1rem 15%;
+  background-color: rgb(75, 75, 75);
+}
+
+.footer * {
+  margin: 0;
+}
+
+.control {
+  margin: auto;
+  width: min(100%, 60rem);
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.control div {
+  font-size: 0.9rem;
+  color: rgb(200, 200, 200);
+  display: flex;
+  flex-direction: column;
+}
+
+.control div :first-child {
+  font-weight: bold;
+  font-size: 1rem;
+  color: white;
+  margin-bottom: 0.5rem;
+}
+
+.footer p {
+  font-size: 0.75rem;
+  color: rgb(175, 175, 175);
+  margin-top: 1rem;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .control {
+    grid-template-columns: 1fr;
+  }
 }

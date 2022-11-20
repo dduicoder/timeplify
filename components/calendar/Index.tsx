@@ -14,11 +14,11 @@ const CalendarHome: FC = () => {
   };
 
   return (
-    <div>
+    <section>
       <button className="btn-flat" onClick={onClick}>
         Today&apos;s Calendar
       </button>
-    </div>
+    </section>
   );
 };
 

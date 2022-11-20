@@ -22,7 +22,7 @@ const CalendarPage: FC<{
 export default CalendarPage;
 
 export const getStaticPaths = async () => {
-  const dates = ["2022-11-14", "2022-11-20"];
+  const dates = ["2022-11-19", "2022-11-20"];
   return {
     fallback: "blocking",
     paths: dates.map((date) => ({

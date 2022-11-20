@@ -15,15 +15,15 @@
   bottom: 0;
   left: 0;
   height: 0.25rem;
-  transition: width 200ms linear;
+  transition: width 150ms linear;
 }
 
 .success {
-  background-color: rgb(50, 230, 50);
+  background-color: var(--main-color);
 }
 
 .error {
-  background-color: var(--main-color);
+  background-color: rgb(240, 80, 80);
 }
 
 .close {

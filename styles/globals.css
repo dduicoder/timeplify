@@ -65,20 +65,39 @@ textarea:focus {
   outline: 3px solid rgba(0, 125, 250, 0.5);
 }
 
-.loader {
+.loading-bar {
   position: fixed;
   height: 2px;
   top: 4rem;
   background-color: var(--color-low-opacity);
-  animation: loading 1s ease-in-out infinite;
+  animation: bar 1s ease-in-out infinite;
 }
 
-@keyframes loading {
+@keyframes bar {
   from {
     width: 0;
   }
   to {
     width: 100%;
+  }
+}
+
+.loading-spinner {
+  margin: auto;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  border: 5px solid #434343;
+  border-color: #434343 transparent #434343 transparent;
+  animation: spinner 1.25s ease-in-out infinite;
+}
+
+@keyframes spinner {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 

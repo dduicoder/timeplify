@@ -1,13 +1,17 @@
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import type { AppProps } from "next/app";
+import { ApolloProvider } from "@apollo/client";
+import client from "../graphql/client";
 
-import "../styles/globals.css";
+import "@fortawesome/fontawesome-svg-core/styles.css";
 
 import NotificationProvider from "../components/notification/NotificationProvider";
 import Header from "../components/layouts/Header";
 import Footer from "../components/layouts/Footer";
 import Head from "next/head";
+
+import "../styles/globals.css";
 
 const App = ({ Component, pageProps }: AppProps) => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -28,15 +32,17 @@ const App = ({ Component, pageProps }: AppProps) => {
       <Head>
         <link rel="shortcut icon" href="../static/favicon.ico" />
       </Head>
-      <NotificationProvider>
-        <div id="overlays"></div>
-        {loading && <div className="loader" />}
-        <Header />
-        <main>
-          <Component {...pageProps} />
-        </main>
-        <Footer />
-      </NotificationProvider>
+      <ApolloProvider client={client}>
+        <NotificationProvider>
+          <div id="overlays"></div>
+          {loading && <div className="loading-bar" />}
+          <Header />
+          <main>
+            <Component {...pageProps} />
+          </main>
+          <Footer />
+        </NotificationProvider>
+      </ApolloProvider>
     </>
   );
 };

@@ -1,5 +1,5 @@
+import { SyntheticEvent, useEffect, useRef } from "react";
 import { useNotification } from "../notification/NotificationProvider";
-
 import { CSSTransition } from "react-transition-group";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,7 +9,6 @@ import Backdrop from "../UI/Backdrop";
 import Portal from "../UI/Portal";
 
 import classes from "./CalendarModal.module.css";
-import { SyntheticEvent, useRef } from "react";
 
 type CalendarType = {
   text: string;
@@ -65,6 +64,18 @@ const CalendarModal = ({ show, close, onAddCalendar }: PropsType) => {
     close();
   };
 
+  useEffect(() => {
+    window.onkeydown = (event) => {
+      if (event.key === "Escape") {
+        close();
+      }
+    };
+
+    return () => {
+      window.onkeydown = null;
+    };
+  }, []);
+
   return (
     <>
       <Backdrop show={show} close={close} />
@@ -74,7 +85,7 @@ const CalendarModal = ({ show, close, onAddCalendar }: PropsType) => {
           mountOnEnter
           unmountOnExit
           in={show}
-          timeout={{ enter: 250, exit: 250 }}
+          timeout={250}
           classNames={{
             enterActive: classes.open,
             exitActive: classes.close,

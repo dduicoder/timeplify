@@ -1,0 +1,117 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,900&family=Roboto:ital,wght@1,900&display=swap");
+
+.gradient {
+  font-family: "Lato", sans-serif;
+  font-size: 3.5rem;
+  letter-spacing: -0.5px;
+  background: linear-gradient(45deg, #21d4fd, #b721ff);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient 5s ease-in-out infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position-x: left;
+  }
+  50% {
+    background-position-x: right;
+  }
+  100% {
+    background-position-x: left;
+  }
+}
+
+.gradient::selection {
+  -webkit-text-fill-color: white;
+  color: white;
+  background: var(--main-color);
+}
+
+.gradient + p {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.first {
+  padding-top: 3rem;
+  text-align: center;
+  width: min(100%, 45rem);
+  min-height: calc(100vh - 6rem);
+}
+
+.action {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.first > svg {
+  margin: auto;
+  display: block;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  font-size: 1.5rem;
+  animation: shake 1s ease-in-out infinite;
+}
+
+@keyframes shake {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(0.5rem);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.second {
+  text-align: center;
+}
+
+.second > div {
+  margin: auto;
+  width: min(100%, 60rem);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-gap: 1.5rem;
+}
+
+.stats div {
+  width: 100%;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  text-align: center;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.stats div svg {
+  display: block;
+  font-size: 2rem;
+  margin: auto;
+  margin-bottom: 1rem;
+}
+
+.second p {
+  margin: 5rem auto;
+}
+
+@media (max-width: 700px) {
+  .stats {
+    grid-template-columns: 1fr;
+    font-size: 1.1rem;
+  }
+  .stats div {
+    padding: 2rem;
+  }
+  .stats div svg {
+    font-size: 2.2rem;
+  }
+}

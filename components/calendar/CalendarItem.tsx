@@ -41,11 +41,9 @@ const CalendarItem: FC<CalendarItemType> = ({ calendar, onDeleteCalendar }) => {
   const removeCalendar = () => {
     setShow(false);
 
-    const timeId = setTimeout(() => {
+    setTimeout(() => {
       onDeleteCalendar(id);
     }, 250);
-
-    clearTimeout(timeId);
   };
 
   useEffect(() => {
@@ -74,8 +72,9 @@ const CalendarItem: FC<CalendarItemType> = ({ calendar, onDeleteCalendar }) => {
       mountOnEnter
       unmountOnExit
       in={show}
-      timeout={{ exit: 250 }}
+      timeout={250}
       classNames={{
+        enterActive: classes.open,
         exitActive: classes.close,
       }}
     >
