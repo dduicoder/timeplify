@@ -1,3 +1,28 @@
+.control {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.control svg {
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.control h1 {
+  margin: 0;
+}
+
+.error {
+  margin-top: 2.5rem;
+  text-align: center;
+}
+
+.error p {
+  margin-bottom: 1.5rem;
+}
+
 .list {
   display: flex;
   flex-direction: column;

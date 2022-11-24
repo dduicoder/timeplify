@@ -1,9 +1,13 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { FC, useState } from "react";
+import { useRouter } from "next/router";
 import { v4 } from "uuid";
 
 import CalendarItem from "./CalendarItem";
 import CalendarModal from "./CalendarModal";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 import classes from "./Calendar.module.css";
 
@@ -44,9 +48,18 @@ type CalendarType = {
   end: string;
 };
 
+const getDateLink = (date: Date, targetDate: number) => {
+  date.setDate(targetDate);
+  const text = date.toLocaleDateString().replaceAll(". ", "-").slice(0, 10);
+
+  return `/calendar/${text}`;
+};
+
 const Calendar: FC<{ date: string }> = ({ date }) => {
+  const router = useRouter();
+
   const { data: queryData, loading: queryLoading } = useQuery(ALL_CALENDARS);
-  const [addCalendar, { loading: addLoading }] = useMutation(ADD_CALENDARS, {
+  const [addCalendar] = useMutation(ADD_CALENDARS, {
     refetchQueries: [{ query: ALL_CALENDARS }, "allCalendars"],
   });
   const [removeCalendar] = useMutation(REMOVE_CALENDARS, {
@@ -69,7 +82,40 @@ const Calendar: FC<{ date: string }> = ({ date }) => {
     removeCalendar({ variables: { id } });
   };
 
-  const today = new Date(date);
+  const toBefore = () => {
+    const yesterday = new Date(calendarDate);
+    router.push(getDateLink(yesterday, calendarDate.getDate() - 1));
+  };
+
+  const toAfter = () => {
+    const tomorrow = new Date(calendarDate);
+    router.push(getDateLink(tomorrow, calendarDate.getDate() + 1));
+  };
+
+  const toToday = () => {
+    const today = new Date();
+    router.push(getDateLink(today, today.getDate()));
+  };
+
+  const calendarDate = new Date(date);
+
+  if (calendarDate > new Date()) {
+    return (
+      <section>
+        <div className={classes.control}>
+          <FontAwesomeIcon icon={faArrowLeft} onClick={toBefore} />
+          <h1>{calendarDate.toLocaleDateString()}</h1>
+          <FontAwesomeIcon icon={faArrowRight} onClick={toAfter} />
+        </div>
+        <div className={classes.error}>
+          <p>No Calendar(future)</p>
+          <button className="btn-flat" onClick={toToday}>
+            Today
+          </button>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section>
@@ -78,7 +124,16 @@ const Calendar: FC<{ date: string }> = ({ date }) => {
         close={() => setShowModal(false)}
         onAddCalendar={newCalendar}
       />
-      <h1>Calendar of {today.toLocaleDateString()}</h1>
+      <div className={classes.control}>
+        <FontAwesomeIcon icon={faArrowLeft} onClick={toBefore} />
+        <h1>{calendarDate.toLocaleDateString()}</h1>
+        <FontAwesomeIcon icon={faArrowRight} onClick={toAfter} />
+      </div>
+      {!calendars && (
+        <div className={classes.error}>
+          <p>daf</p>
+        </div>
+      )}
       <ul className={classes.list}>
         {calendars.map((item: CalendarType) => (
           <CalendarItem

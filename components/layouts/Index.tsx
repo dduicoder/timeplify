@@ -1,10 +1,9 @@
-import { FC } from "react";
+import { useState, FC, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/dist/client/link";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faChevronUp,
   faChevronDown,
   faUsers,
   faHandshakeSimple,
@@ -16,6 +15,26 @@ import classes from "./Index.module.css";
 
 const Index: FC = () => {
   const router = useRouter();
+  const [target, setTarget] = useState<HTMLElement | null | undefined>(null);
+
+  const onIntersect: IntersectionObserverCallback = (event) => {
+    if (event[0].isIntersecting) {
+      event[0].target.classList.add(classes.show);
+    }
+  };
+
+  useEffect(() => {
+    if (!target) return;
+
+    const observer: IntersectionObserver = new IntersectionObserver(
+      onIntersect
+    );
+    observer.observe(target);
+
+    return () => {
+      observer.unobserve(target);
+    };
+  }, [onIntersect, target]);
 
   const today = new Date()
     .toLocaleDateString()
@@ -24,6 +43,15 @@ const Index: FC = () => {
 
   const onClick = () => {
     router.push(`/calendar/${today}`);
+  };
+
+  const onScroll = () => {
+    const secondSection = document.querySelector(`.${classes.second}`);
+    if (secondSection) {
+      secondSection.scrollIntoView({
+        behavior: "smooth",
+      });
+    }
   };
 
   return (
@@ -45,9 +73,10 @@ const Index: FC = () => {
           </button>
         </div>
         <span>Learn about us</span>
-        <FontAwesomeIcon icon={faChevronDown} />
+        <FontAwesomeIcon icon={faChevronDown} onClick={onScroll} />
       </section>
-      <section className={classes.second}>
+      <section className={classes.second} ref={setTarget}>
+        <h1>Simplifey your time</h1>
         <div>
           <div className={classes.stats}>
             <div>
