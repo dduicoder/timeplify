@@ -1,7 +1,7 @@
 import { SyntheticEvent, useEffect, useRef } from "react";
 import { useNotification } from "../notification/NotificationProvider";
-import { CSSTransition } from "react-transition-group";
 
+import { CSSTransition } from "react-transition-group";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
@@ -92,10 +92,10 @@ const CalendarModal = ({ show, close, onAddCalendar }: PropsType) => {
           }}
         >
           <div ref={ref} className={classes.modal}>
-            <div className={classes.control}>
+            <section className={classes.control}>
               <h1>New Calendar</h1>
               <FontAwesomeIcon icon={faXmark} onClick={close} />
-            </div>
+            </section>
             <form onSubmit={submitHandler}>
               <label htmlFor="calendar-description">Title</label>
               <input

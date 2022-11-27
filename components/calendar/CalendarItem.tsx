@@ -1,5 +1,4 @@
-import { useState, useEffect, FC, useRef } from "react";
-import { CSSTransition } from "react-transition-group";
+import { useState, useEffect, FC } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX, faCheck } from "@fortawesome/free-solid-svg-icons";
@@ -30,8 +29,7 @@ const getTime = (date: string[], sec: string) => {
 };
 
 const CalendarItem: FC<CalendarItemType> = ({ calendar, onDeleteCalendar }) => {
-  const ref = useRef(null);
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState<boolean>(true);
   const [currentDate, setCurrentDate] = useState<string[]>(
     new Date().toTimeString().split(" ")[0].split(":")
   );
@@ -67,35 +65,23 @@ const CalendarItem: FC<CalendarItemType> = ({ calendar, onDeleteCalendar }) => {
   const progress = Math.floor((timeCompleted / timeSum) * 100);
 
   return (
-    <CSSTransition
-      nodeRef={ref}
-      mountOnEnter
-      unmountOnExit
-      in={show}
-      timeout={250}
-      classNames={{
-        enterActive: classes.open,
-        exitActive: classes.close,
-      }}
-    >
-      <li className={classes.item} ref={ref}>
-        <div className={classes.info}>
-          <span>{text}</span>
-          <span>
-            {start} ~ {end}
-          </span>
-        </div>
-        <div className={classes.action}>
-          <button onClick={removeCalendar} className="btn">
-            <FontAwesomeIcon icon={faX} />
-          </button>
-          <button className="btn-flat">
-            <FontAwesomeIcon icon={faCheck} />
-          </button>
-        </div>
-        <div className={classes.progress} style={{ width: `${progress}%` }} />
-      </li>
-    </CSSTransition>
+    <li className={`${classes.item} ${!show ? classes.close : ""}`}>
+      <div className={classes.info}>
+        <span>{text}</span>
+        <span>
+          {start} ~ {end}
+        </span>
+      </div>
+      <div className={classes.action}>
+        <button onClick={removeCalendar} className="btn">
+          <FontAwesomeIcon icon={faX} />
+        </button>
+        <button className="btn-flat">
+          <FontAwesomeIcon icon={faCheck} />
+        </button>
+      </div>
+      <div className={classes.progress} style={{ width: `${progress}%` }} />
+    </li>
   );
 };
 

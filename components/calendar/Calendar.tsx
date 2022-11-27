@@ -1,43 +1,46 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
-import { FC, useState } from "react";
 import { useRouter } from "next/router";
+import { FC, useState } from "react";
 import { v4 } from "uuid";
-
-import CalendarItem from "./CalendarItem";
-import CalendarModal from "./CalendarModal";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
+import CalendarItem from "./CalendarItem";
+import CalendarModal from "./CalendarModal";
+
 import classes from "./Calendar.module.css";
 
-const ALL_CALENDARS = gql`
-  query allCalendars {
-    allCalendars {
-      id
-      text
-      start
-      end
+const GET_DATE = gql`
+  query getDate($date: String!) {
+    getDate(date: $date) {
+      calendars {
+        id
+        text
+        start
+        end
+      }
     }
   }
 `;
 
-const ADD_CALENDARS = gql`
+const ADD_CALENDAR = gql`
   mutation addCalendar(
+    $date: String!
     $id: ID!
     $text: String!
     $start: String!
     $end: String!
   ) {
-    addCalendar(id: $id, text: $text, start: $start, end: $end) {
-      id
+    addCalendar(date: $date, id: $id, text: $text, start: $start, end: $end) {
+      text
     }
   }
 `;
 
-const REMOVE_CALENDARS = gql`
-  mutation removeCalendar($id: ID!) {
-    removeCalendar(id: $id)
+const REMOVE_CALENDAR = gql`
+  mutation removeCalendar($date: String!, $id: ID!) {
+    removeCalendar(date: $date, id: $id)
   }
 `;
 
@@ -55,15 +58,30 @@ const getDateLink = (date: Date, targetDate: number) => {
   return `/calendar/${text}`;
 };
 
+// 미래 날짜 생성 막기
+
 const Calendar: FC<{ date: string }> = ({ date }) => {
   const router = useRouter();
 
-  const { data: queryData, loading: queryLoading } = useQuery(ALL_CALENDARS);
-  const [addCalendar] = useMutation(ADD_CALENDARS, {
-    refetchQueries: [{ query: ALL_CALENDARS }, "allCalendars"],
+  const { data: queryData, loading: queryLoading } = useQuery(GET_DATE, {
+    variables: { date },
   });
-  const [removeCalendar] = useMutation(REMOVE_CALENDARS, {
-    refetchQueries: [{ query: ALL_CALENDARS }, "allCalendars"],
+
+  const [addCalendar] = useMutation(ADD_CALENDAR, {
+    refetchQueries: [
+      {
+        query: GET_DATE,
+        variables: { date },
+      },
+    ],
+  });
+  const [removeCalendar] = useMutation(REMOVE_CALENDAR, {
+    refetchQueries: [
+      {
+        query: GET_DATE,
+        variables: { date },
+      },
+    ],
   });
 
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -72,14 +90,14 @@ const Calendar: FC<{ date: string }> = ({ date }) => {
     return <div className="loading-spinner" />;
   }
 
-  const calendars = queryData.allCalendars;
+  const calendars = queryData.getDate.calendars;
 
   const newCalendar = (data: { text: string; start: string; end: string }) => {
-    addCalendar({ variables: { id: v4(), ...data } });
+    addCalendar({ variables: { date, id: v4(), ...data } });
   };
 
   const deleteCalendar = (id: string) => {
-    removeCalendar({ variables: { id } });
+    removeCalendar({ variables: { date, id } });
   };
 
   const toBefore = () => {
@@ -108,7 +126,7 @@ const Calendar: FC<{ date: string }> = ({ date }) => {
           <FontAwesomeIcon icon={faArrowRight} onClick={toAfter} />
         </div>
         <div className={classes.error}>
-          <p>No Calendar(future)</p>
+          <p>No Calendars(future)</p>
           <button className="btn-flat" onClick={toToday}>
             Today
           </button>
@@ -129,9 +147,9 @@ const Calendar: FC<{ date: string }> = ({ date }) => {
         <h1>{calendarDate.toLocaleDateString()}</h1>
         <FontAwesomeIcon icon={faArrowRight} onClick={toAfter} />
       </div>
-      {!calendars && (
+      {calendars.length === 0 && (
         <div className={classes.error}>
-          <p>daf</p>
+          <p>No Calendars</p>
         </div>
       )}
       <ul className={classes.list}>
