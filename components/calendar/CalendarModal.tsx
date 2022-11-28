@@ -8,7 +8,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import Backdrop from "../UI/Backdrop";
 import Portal from "../UI/Portal";
 
-import classes from "./CalendarModal.module.css";
+import classes from "./CalendarModal.module.scss";
 
 type CalendarType = {
   text: string;

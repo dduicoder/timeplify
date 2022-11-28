@@ -4,7 +4,7 @@ import { CSSTransition } from "react-transition-group";
 
 import Portal from "./Portal";
 
-import classes from "./Backdrop.module.css";
+import classes from "./Backdrop.module.scss";
 
 type BackdropProps = {
   show: boolean;

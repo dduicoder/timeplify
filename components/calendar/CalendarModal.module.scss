@@ -10,45 +10,44 @@
   z-index: 10;
   overflow-y: scroll;
   background-color: white;
-}
 
-.modal::-webkit-scrollbar {
-  display: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  form {
+    margin-top: 1.5rem;
+  }
+
+  label {
+    font-weight: bold;
+  }
+
+  input {
+    margin: 1rem 0;
+  }
 }
 
 .control {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
 
-.control svg {
-  font-size: 1.5rem;
-  cursor: pointer;
-}
+  svg {
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
 
-.control h1 {
-  margin: 0;
-}
-
-.modal form {
-  margin-top: 1.5rem;
-}
-
-.modal label {
-  font-weight: bold;
-}
-
-.modal input {
-  margin: 1rem 0;
+  h1 {
+    margin: 0;
+  }
 }
 
 .action {
   text-align: right;
-}
-
-.action button:last-child {
-  margin-left: 0.5rem;
+  button:last-child {
+    margin-left: 0.5rem;
+  }
 }
 
 .open {

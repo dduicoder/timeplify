@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { FC } from "react";
 
-import classes from "./Header.module.css";
+import classes from "./Header.module.scss";
 
 const Header: FC = () => {
   const router = useRouter();

@@ -10,25 +10,25 @@
   align-items: center;
   position: relative;
   overflow: hidden;
-}
 
-.info {
-  display: flex;
-  padding: 0.5rem;
-  flex-direction: column;
-}
+  .info {
+    display: flex;
+    padding: 0.5rem;
+    flex-direction: column;
+  }
 
-.action button {
-  margin-right: 0.5rem;
-}
+  .action button {
+    margin-right: 0.5rem;
+  }
 
-.progress {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 5px;
-  background-color: var(--color-light);
-  transition: width 1s ease-in-out;
+  .progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 5px;
+    background-color: var(--color-light);
+    transition: width 1s ease-in-out;
+  }
 }
 
 .close {

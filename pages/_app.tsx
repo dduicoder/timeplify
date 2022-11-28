@@ -11,7 +11,7 @@ import Header from "../components/layouts/Header";
 import Footer from "../components/layouts/Footer";
 import Head from "next/head";
 
-import "../styles/globals.css";
+import "../styles/globals.scss";
 
 const App = ({ Component, pageProps }: AppProps) => {
   const [loading, setLoading] = useState<boolean>(false);

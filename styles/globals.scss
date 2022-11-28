@@ -73,15 +73,6 @@ textarea:focus {
   animation: bar 1s ease-in-out infinite;
 }
 
-@keyframes bar {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
-}
-
 .loading-spinner {
   margin: auto;
   width: 4rem;
@@ -90,6 +81,15 @@ textarea:focus {
   border: 5px solid #434343;
   border-color: #434343 transparent #434343 transparent;
   animation: spinner 1.25s ease-in-out infinite;
+}
+
+@keyframes bar {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
 }
 
 @keyframes spinner {
@@ -102,34 +102,34 @@ textarea:focus {
 }
 
 .btn {
-  color: var(--main-color);
-  border: 1px solid var(--main-color);
-  box-shadow: 3px 3px var(--color-low-opacity);
+  @mixin buttons {
+    color: var(--main-color);
+    border: 1px solid var(--main-color);
+    box-shadow: 3px 3px var(--color-low-opacity);
+    transition: all 0.25s ease-in-out;
+    padding: 0.5rem 0.7rem;
+    border-radius: 0.5rem;
+  }
+
+  @include buttons();
   background-color: transparent;
-  transition: all 0.25s ease-in-out;
-  padding: 0.5rem 0.7rem;
-  border-radius: 0.5rem;
-}
 
-.btn:hover,
-.btn:active {
-  box-shadow: 0 0 0.5rem var(--color-super-low-opacity);
-  background-color: var(--color-super-light);
-}
+  &:hover,
+  &:active {
+    box-shadow: 0 0 0.5rem var(--color-super-low-opacity);
+    background-color: var(--color-super-light);
+  }
 
-.btn-flat {
-  color: white;
-  border: 1px solid var(--main-color);
-  box-shadow: 3px 3px var(--color-low-opacity);
-  background-color: var(--main-color);
-  transition: all 0.25s ease-in-out;
-  padding: 0.5rem 0.7rem;
-  border-radius: 0.5rem;
-}
+  &-flat {
+    @include buttons();
+    color: white;
+    background-color: var(--main-color);
 
-.btn-flat:hover,
-.btn-flat:active {
-  box-shadow: 0 0 0.5rem var(--color-low-opacity);
-  background-color: var(--color-light);
-  border-color: var(--color-light);
+    &:hover,
+    &:active {
+      box-shadow: 0 0 0.5rem var(--color-low-opacity);
+      background-color: var(--color-light);
+      border-color: var(--color-light);
+    }
+  }
 }

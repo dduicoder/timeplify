@@ -1,6 +1,8 @@
 import { useRouter } from "next/router";
 import { FC } from "react";
 
+import classes from "./Index.module.scss";
+
 const CalendarHome: FC = () => {
   const router = useRouter();
 
@@ -14,10 +16,12 @@ const CalendarHome: FC = () => {
   };
 
   return (
-    <section>
-      <button className="btn-flat" onClick={onClick}>
-        Today&apos;s Calendar
-      </button>
+    <section className={classes.section}>
+      <div>
+        <button className="btn-flat" onClick={onClick}>
+          Today&apos;s Calendar
+        </button>
+      </div>
     </section>
   );
 };

@@ -9,7 +9,7 @@ import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import CalendarItem from "./CalendarItem";
 import CalendarModal from "./CalendarModal";
 
-import classes from "./Calendar.module.css";
+import classes from "./Calendar.module.scss";
 
 const GET_DATE = gql`
   query getDate($date: String!) {

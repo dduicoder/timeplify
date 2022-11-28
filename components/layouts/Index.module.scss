@@ -14,6 +14,17 @@
   background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: gradient 5s ease-in-out infinite;
+
+  &::selection {
+    -webkit-text-fill-color: white;
+    color: white;
+    background: var(--main-color);
+  }
+
+  & + p {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+  }
 }
 
 @keyframes gradient {
@@ -58,22 +69,20 @@
   }
 }
 
-.gradient::selection {
-  -webkit-text-fill-color: white;
-  color: white;
-  background: var(--main-color);
-}
-
-.gradient + p {
-  font-size: 1.1rem;
-  margin-bottom: 2rem;
-}
-
 .first {
   margin-bottom: 1px;
   padding-top: 3rem;
   animation: pop-up 0.5s ease-in-out;
   text-align: center;
+
+  & > svg {
+    margin: auto;
+    display: block;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    font-size: 1.5rem;
+    animation: shake 1s ease-in-out infinite;
+  }
 }
 
 .action {
@@ -81,15 +90,6 @@
   justify-content: center;
   gap: 1rem;
   margin-bottom: 1.5rem;
-}
-
-.first > svg {
-  margin: auto;
-  display: block;
-  cursor: pointer;
-  margin-top: 0.5rem;
-  font-size: 1.5rem;
-  animation: shake 1s ease-in-out infinite;
 }
 
 @keyframes shake {
@@ -108,47 +108,49 @@
   padding-top: 2rem;
   text-align: center;
   scroll-margin: 4rem;
-}
 
-.second > div {
-  margin: auto;
-  width: min(100%, 60rem);
+  & > div {
+    margin: auto;
+    width: min(100%, 60rem);
+  }
+
+  p {
+    margin: 5rem auto;
+  }
 }
 
 .stats {
   display: grid;
   grid-template-columns: auto auto auto;
   grid-gap: 1.5rem;
-}
 
-.stats div {
-  width: 100%;
-  border-radius: 1rem;
-  padding: 1.5rem;
-  text-align: center;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-}
+  div {
+    width: 100%;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    text-align: center;
+    border: 1px solid rgba(0, 0, 0, 0.1);
 
-.stats div svg {
-  display: block;
-  font-size: 2rem;
-  margin: auto;
-  margin-bottom: 1rem;
-}
-
-.second p {
-  margin: 5rem auto;
+    svg {
+      display: block;
+      font-size: 2rem;
+      margin: auto;
+      margin-bottom: 1rem;
+    }
+  }
 }
 
 @media (max-width: 700px) {
   .stats {
     grid-template-columns: 1fr;
     font-size: 1.1rem;
-  }
-  .stats div {
-    padding: 2rem;
-  }
-  .stats div svg {
-    font-size: 2.2rem;
+
+    div {
+      padding: 2rem;
+
+      svg {
+        font-size: 2.2rem;
+      }
+    }
   }
 }

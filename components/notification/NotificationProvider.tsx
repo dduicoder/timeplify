@@ -10,7 +10,7 @@ import { v4 } from "uuid";
 
 import Notification from "./Notification";
 
-import classes from "./NotificationProvider.module.css";
+import classes from "./NotificationProvider.module.scss";
 
 type NoticeType = {
   id: string;

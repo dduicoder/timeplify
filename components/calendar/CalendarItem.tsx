@@ -3,7 +3,7 @@ import { useState, useEffect, FC } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX, faCheck } from "@fortawesome/free-solid-svg-icons";
 
-import classes from "./CalendarItem.module.css";
+import classes from "./CalendarItem.module.scss";
 
 type CalendarType = {
   id: string;

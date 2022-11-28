@@ -3,10 +3,10 @@
   padding: 1rem;
   color: white;
   background-color: rgb(75, 75, 75);
-}
 
-.footer * {
-  margin: 0;
+  * {
+    margin: 0;
+  }
 }
 
 .control {
@@ -15,20 +15,20 @@
   display: grid;
   grid-gap: 1rem;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-}
 
-.control div {
-  font-size: 0.9rem;
-  color: rgb(200, 200, 200);
-  display: flex;
-  flex-direction: column;
-}
+  div {
+    font-size: 0.9rem;
+    color: rgb(200, 200, 200);
+    display: flex;
+    flex-direction: column;
+  }
 
-.control div :first-child {
-  font-weight: bold;
-  font-size: 1rem;
-  color: white;
-  margin-bottom: 0.5rem;
+  div :first-child {
+    font-weight: bold;
+    font-size: 1rem;
+    color: white;
+    margin-bottom: 0.5rem;
+  }
 }
 
 .footer p {

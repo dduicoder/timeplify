@@ -11,7 +11,7 @@ import {
   faCircleCheck,
 } from "@fortawesome/free-solid-svg-icons";
 
-import classes from "./Index.module.css";
+import classes from "./Index.module.scss";
 
 const Index: FC = () => {
   const router = useRouter();

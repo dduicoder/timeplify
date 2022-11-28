@@ -1,6 +1,6 @@
 import { useState, useEffect, FC, useCallback } from "react";
 
-import classes from "./Notification.module.css";
+import classes from "./Notification.module.scss";
 
 type NoticeType = {
   id: string;

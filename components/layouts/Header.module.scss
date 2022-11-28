@@ -10,11 +10,11 @@
   background: rgba(255, 255, 255, 0.75);
   backdrop-filter: blur(5px);
   z-index: 5;
-}
 
-.header > a {
-  font-size: 1.5rem;
-  font-weight: bold;
+  & > a {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
 }
 
 .nav {

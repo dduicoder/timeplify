@@ -3,7 +3,7 @@ import Link from "next/dist/client/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
-import classes from "./NotFound.module.css";
+import classes from "./NotFound.module.scss";
 
 const NotFound = () => {
   return (
