@@ -74,7 +74,7 @@ const CalendarModal = ({ show, close, onAddCalendar }: PropsType) => {
     return () => {
       window.onkeydown = null;
     };
-  }, []);
+  }, [close]);
 
   return (
     <>

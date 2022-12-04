@@ -11,11 +11,11 @@
 * {
   box-sizing: border-box;
   font-family: "Noto Sans KR", sans-serif;
-}
 
-*::selection {
-  color: white;
-  background: rgb(75, 75, 75);
+  &::selection {
+    color: white;
+    background: rgb(75, 75, 75);
+  }
 }
 
 body {
@@ -57,12 +57,11 @@ textarea {
   outline: 1px solid rgb(225, 225, 225);
   width: 100%;
   transition: all 0.25s ease-in-out;
-}
 
-input:focus,
-textarea:focus {
-  outline-offset: -1.5px;
-  outline: 3px solid rgba(0, 125, 250, 0.5);
+  &:focus {
+    outline-offset: -1.5px;
+    outline: 3px solid rgba(0, 125, 250, 0.5);
+  }
 }
 
 .loading-bar {
@@ -111,7 +110,7 @@ textarea:focus {
     border-radius: 0.5rem;
   }
 
-  @include buttons();
+  @include buttons;
   background-color: transparent;
 
   &:hover,
@@ -121,9 +120,18 @@ textarea:focus {
   }
 
   &-flat {
-    @include buttons();
+    @include buttons;
     color: white;
     background-color: var(--main-color);
+
+    &[disabled] {
+      background-color: rgba($color: black, $alpha: 0.05);
+      color: rgba($color: black, $alpha: 0.5);
+      border: none;
+      box-shadow: none;
+      pointer-events: none;
+      cursor: auto;
+    }
 
     &:hover,
     &:active {

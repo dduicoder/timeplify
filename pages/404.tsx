@@ -1,8 +1,9 @@
+import { NextPage } from "next";
 import Head from "next/head";
-import { FC } from "react";
+
 import NotFound from "../components/layouts/NotFound";
 
-const ErrorPage: FC = () => {
+const ErrorPage: NextPage = () => {
   return (
     <>
       <Head>

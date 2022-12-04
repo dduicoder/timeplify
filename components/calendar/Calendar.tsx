@@ -53,12 +53,10 @@ type CalendarType = {
 
 const getDateLink = (date: Date, targetDate: number) => {
   date.setDate(targetDate);
-  const text = date.toLocaleDateString().replaceAll(". ", "-").slice(0, 10);
+  const text = date.toISOString().slice(0, 10);
 
   return `/calendar/${text}`;
 };
-
-// 미래 날짜 생성 막기
 
 const Calendar: FC<{ date: string }> = ({ date }) => {
   const router = useRouter();
@@ -117,23 +115,18 @@ const Calendar: FC<{ date: string }> = ({ date }) => {
 
   const calendarDate = new Date(date);
 
-  if (calendarDate > new Date()) {
-    return (
-      <section>
-        <div className={classes.control}>
-          <FontAwesomeIcon icon={faArrowLeft} onClick={toBefore} />
-          <h1>{calendarDate.toLocaleDateString()}</h1>
-          <FontAwesomeIcon icon={faArrowRight} onClick={toAfter} />
-        </div>
-        <div className={classes.error}>
-          <p>No Calendars(future)</p>
-          <button className="btn-flat" onClick={toToday}>
-            Today
-          </button>
-        </div>
-      </section>
-    );
-  }
+  const formatter = new Intl.RelativeTimeFormat("en-US", {
+    numeric: "auto",
+    style: "short",
+  });
+
+  const daysPassed = Math.ceil(
+    (calendarDate.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
+  );
+
+  const daysPassedText = formatter.format(daysPassed, "day");
+
+  const isFuture = calendarDate > new Date();
 
   return (
     <section>
@@ -144,12 +137,14 @@ const Calendar: FC<{ date: string }> = ({ date }) => {
       />
       <div className={classes.control}>
         <FontAwesomeIcon icon={faArrowLeft} onClick={toBefore} />
-        <h1>{calendarDate.toLocaleDateString()}</h1>
+        <h1>
+          {calendarDate.toLocaleDateString()} ({daysPassedText})
+        </h1>
         <FontAwesomeIcon icon={faArrowRight} onClick={toAfter} />
       </div>
       {calendars.length === 0 && (
         <div className={classes.error}>
-          <p>No Calendars</p>
+          <p>No Calendars{isFuture ? "(future)" : ""}</p>
         </div>
       )}
       <ul className={classes.list}>
@@ -162,7 +157,11 @@ const Calendar: FC<{ date: string }> = ({ date }) => {
         ))}
       </ul>
       <div className={classes.action}>
-        <button className="btn-flat" onClick={() => setShowModal(true)}>
+        <button
+          className="btn-flat"
+          onClick={() => setShowModal(true)}
+          disabled={isFuture}
+        >
           New Calendar
         </button>
       </div>

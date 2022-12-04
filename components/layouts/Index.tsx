@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import Link from "next/dist/client/link";
-import { useState, FC, useEffect } from "react";
+import { useState, FC, useEffect, useCallback } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -17,11 +17,11 @@ const Index: FC = () => {
   const router = useRouter();
   const [target, setTarget] = useState<HTMLElement | null | undefined>(null);
 
-  const onIntersect: IntersectionObserverCallback = (event) => {
+  const onIntersect: IntersectionObserverCallback = useCallback((event) => {
     if (event[0].isIntersecting) {
       event[0].target.classList.add(classes.show);
     }
-  };
+  }, []);
 
   useEffect(() => {
     if (!target) return;
@@ -76,7 +76,7 @@ const Index: FC = () => {
         <FontAwesomeIcon icon={faChevronDown} onClick={onScroll} />
       </section>
       <section className={classes.second} ref={setTarget}>
-        <h1>Simplifey your time</h1>
+        <h1>Save your time with Timeplifey</h1>
         <div>
           <div className={classes.stats}>
             <div>

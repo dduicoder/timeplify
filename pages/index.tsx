@@ -1,8 +1,9 @@
+import { NextPage } from "next";
 import Head from "next/head";
-import { FC } from "react";
+
 import Index from "../components/layouts/Index";
 
-const Home: FC = () => {
+const Home: NextPage = () => {
   return (
     <>
       <Head>
