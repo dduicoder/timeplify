@@ -1,0 +1,71 @@
+.second {
+  border-top-left-radius: 2rem;
+  border-top-right-radius: 2rem;
+  background: radial-gradient(
+    100% 126.56% at 0% 0%,
+    #7f60ff 32.29%,
+    #e0acff 100%
+  );
+  color: white;
+  scroll-margin: 4rem;
+  height: calc(100vh - 4rem);
+
+  & > div {
+    margin: auto;
+    padding: 4rem 1.5rem;
+    width: min(100%, 70rem);
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 1.5rem;
+    place-items: center;
+
+    :first-child {
+      grid-column: 1 / 4;
+
+      h1 {
+        font-size: 3rem;
+      }
+
+      .list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+
+        li {
+          background-color: rgba($color: white, $alpha: 0.05);
+          padding: 1.5rem;
+          border-radius: 1.5rem;
+          font-size: 1.25rem;
+          cursor: pointer;
+          transition: background-color 0.25s ease-in-out;
+
+          &:hover {
+            background-color: rgba($color: white, $alpha: 0.1);
+          }
+
+          svg {
+            margin-right: 0.5rem;
+          }
+        }
+      }
+    }
+
+    :last-child {
+      grid-column: 4 / 6;
+
+      div {
+        border-radius: 1rem;
+        padding: 1rem;
+        text-align: center;
+        background-color: rgba($color: white, $alpha: 0.05);
+
+        svg {
+          display: block;
+          font-size: 2rem;
+          margin: auto;
+          margin-bottom: 1rem;
+        }
+      }
+    }
+  }
+}

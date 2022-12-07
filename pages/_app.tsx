@@ -43,7 +43,7 @@ const App = ({ Component, pageProps }: AppProps) => {
           <div id="overlays"></div>
           {loading && <div className="loading-bar" />}
           <Header />
-          <main>
+          <main id={router.pathname === "/" ? "" : "main"}>
             <Component {...pageProps} />
           </main>
           <Footer />

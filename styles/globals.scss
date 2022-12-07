@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
 
 :root {
   --main-color: rgb(100, 115, 230);
@@ -10,7 +10,7 @@
 
 * {
   box-sizing: border-box;
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: "Inter", sans-serif;
 
   &::selection {
     color: white;
@@ -20,9 +20,10 @@
 
 body {
   margin: 0;
+  scroll-behavior: smooth;
 }
 
-main {
+#main {
   margin: 2rem auto;
   padding: 0 1rem;
   min-height: calc(100vh - 8rem);
@@ -106,7 +107,7 @@ textarea {
     border: 1px solid var(--main-color);
     box-shadow: 3px 3px var(--color-low-opacity);
     transition: all 0.25s ease-in-out;
-    padding: 0.5rem 0.7rem;
+    padding: 0.6rem 0.7rem;
     border-radius: 0.5rem;
   }
 

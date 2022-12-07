@@ -134,7 +134,7 @@ const Calendar: FC<{ date: string }> = ({ date }) => {
       </div>
       {calendars.length === 0 && (
         <div className={classes.error}>
-          <p>No Calendars{isFuture ? "(future)" : ""}</p>
+          <p>- No Calendars{isFuture ? "(future)" : ""} -</p>
         </div>
       )}
       <ul className={classes.list}>

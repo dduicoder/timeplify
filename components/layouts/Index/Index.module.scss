@@ -1,0 +1,46 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,900&family=Roboto:ital,wght@1,900&display=swap");
+
+.second {
+  min-height: calc(100vh - 4rem);
+}
+
+.show {
+  opacity: 0;
+  animation: pop-up 0.5s ease-in-out 0.5s forwards;
+}
+
+@keyframes pop-up {
+  0% {
+    opacity: 0;
+    transform: translateY(5%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.up {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  width: 1rem;
+  height: 1rem;
+  padding: 0.5rem;
+  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
+  background-color: rgba($color: white, $alpha: 0.8);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+@media (max-width: 866px) {
+  .second > div {
+    grid-template-columns: 1fr;
+    padding-top: 2rem;
+
+    :first-child,
+    :last-child {
+      grid-column: unset;
+    }
+  }
+}

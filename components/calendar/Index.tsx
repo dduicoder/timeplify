@@ -54,10 +54,12 @@ const CalendarHome: FC = () => {
       <div className={classes.dates}>
         {dates.map((date: DateType) => (
           <Link key={date.date} href={`/calendar/${date.date}`}>
-            {date.date}
-            {date.calendars.map((calendar) => (
-              <div key={calendar.id}>{calendar.text}</div>
-            ))}
+            <span>{date.date}</span>
+            <ul>
+              {date.calendars.map((calendar) => (
+                <li key={calendar.id}>· {calendar.text}</li>
+              ))}
+            </ul>
           </Link>
         ))}
       </div>
