@@ -1,4 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { FC, useEffect } from "react";
 
@@ -23,7 +24,7 @@ type CalendarType = {
 
 type DateType = {
   date: string;
-  calendars: CalendarType;
+  calendars: CalendarType[];
 };
 
 const CalendarHome: FC = () => {
@@ -46,21 +47,18 @@ const CalendarHome: FC = () => {
   };
 
   const dates: DateType[] = data.allDates;
-  console.log(dates);
 
   return (
     <section className={classes.section}>
-      <h1>Calendar</h1>
+      <h1>Calendars</h1>
       <div className={classes.dates}>
         {dates.map((date: DateType) => (
-          <div
-            key={date.date}
-            onClick={() => {
-              router.push(`/calendar/${date.date}`);
-            }}
-          >
+          <Link key={date.date} href={`/calendar/${date.date}`}>
             {date.date}
-          </div>
+            {date.calendars.map((calendar) => (
+              <div key={calendar.id}>{calendar.text}</div>
+            ))}
+          </Link>
         ))}
       </div>
       <div className={classes.action}>

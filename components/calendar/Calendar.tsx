@@ -1,5 +1,5 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
-import { useRouter } from "next/router";
+import Link from "next/link";
 import { FC, useState } from "react";
 import { v4 } from "uuid";
 
@@ -51,16 +51,7 @@ type CalendarType = {
   end: string;
 };
 
-const getDateLink = (date: Date, targetDate: number) => {
-  date.setDate(targetDate);
-  const text = date.toISOString().slice(0, 10);
-
-  return `/calendar/${text}`;
-};
-
 const Calendar: FC<{ date: string }> = ({ date }) => {
-  const router = useRouter();
-
   const { data: queryData, loading: queryLoading } = useQuery(GET_DATE, {
     variables: { date },
   });
@@ -98,22 +89,17 @@ const Calendar: FC<{ date: string }> = ({ date }) => {
     removeCalendar({ variables: { date, id } });
   };
 
-  const toBefore = () => {
-    const yesterday = new Date(calendarDate);
-    router.push(getDateLink(yesterday, calendarDate.getDate() - 1));
-  };
+  const getDateLink = (targetDate: number) => {
+    const tempDate = new Date(date);
+    tempDate.setDate(calendarDate.getDate() + targetDate);
+    const text = tempDate.toISOString().slice(0, 10);
 
-  const toAfter = () => {
-    const tomorrow = new Date(calendarDate);
-    router.push(getDateLink(tomorrow, calendarDate.getDate() + 1));
-  };
-
-  const toToday = () => {
-    const today = new Date();
-    router.push(getDateLink(today, today.getDate()));
+    return `/calendar/${text}`;
   };
 
   const calendarDate = new Date(date);
+
+  const today = new Date();
 
   const formatter = new Intl.RelativeTimeFormat("en-US", {
     numeric: "auto",
@@ -121,12 +107,12 @@ const Calendar: FC<{ date: string }> = ({ date }) => {
   });
 
   const daysPassed = Math.ceil(
-    (calendarDate.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
+    (calendarDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
   );
 
   const daysPassedText = formatter.format(daysPassed, "day");
 
-  const isFuture = calendarDate > new Date();
+  const isFuture = calendarDate > today;
 
   return (
     <section>
@@ -136,11 +122,15 @@ const Calendar: FC<{ date: string }> = ({ date }) => {
         onAddCalendar={newCalendar}
       />
       <div className={classes.control}>
-        <FontAwesomeIcon icon={faArrowLeft} onClick={toBefore} />
+        <Link href={getDateLink(-1)}>
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </Link>
         <h1>
           {calendarDate.toLocaleDateString()} ({daysPassedText})
         </h1>
-        <FontAwesomeIcon icon={faArrowRight} onClick={toAfter} />
+        <Link href={getDateLink(1)}>
+          <FontAwesomeIcon icon={faArrowRight} />
+        </Link>
       </div>
       {calendars.length === 0 && (
         <div className={classes.error}>
