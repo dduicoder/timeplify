@@ -1,11 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,900&family=Roboto:ital,wght@1,900&display=swap");
 
-.second {
-  min-height: calc(100vh - 4rem);
-}
-
 .show {
-  opacity: 0;
   animation: pop-up 0.5s ease-in-out 0.5s forwards;
 }
 
@@ -31,16 +26,4 @@
   background-color: rgba($color: white, $alpha: 0.8);
   border-radius: 50%;
   cursor: pointer;
-}
-
-@media (max-width: 866px) {
-  .second > div {
-    grid-template-columns: 1fr;
-    padding-top: 2rem;
-
-    :first-child,
-    :last-child {
-      grid-column: unset;
-    }
-  }
 }

@@ -1,16 +1,14 @@
 .first {
-  margin-bottom: 1px;
-  position: relative;
   animation: pop-up 0.5s ease-in-out;
   min-height: calc(100vh - 4rem);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   & > div {
     padding: 0 1rem;
+    margin-top: -4rem;
     width: min(100%, 50rem);
-    position: absolute;
-    top: calc(50% - 6rem);
-    left: 50%;
-    transform: translate(-50%, -50%);
     text-align: center;
 
     h1 {
@@ -30,14 +28,11 @@
         color: white;
         background: var(--main-color);
       }
-
-      & + p {
-        font-size: 1.1rem;
-        margin-bottom: 2rem;
-      }
     }
 
     p {
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
       line-height: 130%;
     }
 
