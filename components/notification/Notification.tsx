@@ -9,11 +9,11 @@ type NoticeType = {
 };
 
 type PropsType = {
-  deleteNotification: (id: string) => void;
   note: NoticeType;
+  deleteNotification: (id: string) => void;
 };
 
-const Notification: FC<PropsType> = ({ deleteNotification, note }) => {
+const Notification: FC<PropsType> = ({ note, deleteNotification }) => {
   const [exit, setExit] = useState<boolean>(false);
   const [width, setWidth] = useState<number>(0);
   const [intervalID, setIntervalID] = useState<any>();

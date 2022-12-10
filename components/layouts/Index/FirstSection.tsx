@@ -17,11 +17,10 @@ const FirstSection: FC = () => {
   };
 
   const onScroll = () => {
-    const secondSection = document.querySelector(`main > section:nth-child(2)`);
+    const secondSection = document.querySelectorAll("#__next section")[1];
+
     if (secondSection) {
-      secondSection.scrollIntoView({
-        behavior: "smooth",
-      });
+      secondSection.scrollIntoView();
     }
   };
 
@@ -43,7 +42,7 @@ const FirstSection: FC = () => {
             Todays Calendar
           </button>
         </div>
-        <span>Learn about us</span>
+        <span>Learn about Timeplifey</span>
         <FontAwesomeIcon icon={faChevronDown} onClick={onScroll} />
       </div>
     </section>

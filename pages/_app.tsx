@@ -6,6 +6,9 @@ import client from "../graphql/client";
 
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
+
 import NotificationProvider from "../components/notification/NotificationProvider";
 import Header from "../components/layouts/Header";
 import Footer from "../components/layouts/Footer";
@@ -33,6 +36,21 @@ const App = ({ Component, pageProps }: AppProps) => {
     };
   });
 
+  const scrollToTop = () => {
+    let wrapper;
+    // if (isIndex) {
+    // } else {
+    //   wrapper = window;
+    // }
+    wrapper = document.querySelector(".wrapper");
+
+    console.log(wrapper);
+
+    wrapper?.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const isIndex = router.pathname === "/";
+
   return (
     <>
       <Head>
@@ -40,13 +58,21 @@ const App = ({ Component, pageProps }: AppProps) => {
       </Head>
       <ApolloProvider client={client}>
         <NotificationProvider>
-          <div id="overlays"></div>
-          {loading && <div className="loading-bar" />}
-          <Header />
-          <main id={router.pathname === "/" ? "" : "main"}>
-            <Component {...pageProps} />
-          </main>
-          <Footer />
+          <div id="overlays">
+            <FontAwesomeIcon icon={faChevronUp} id="up" onClick={scrollToTop} />
+          </div>
+          <div className={`wrapper ${isIndex ? "index" : ""}`}>
+            {loading && <div className="loading-bar" />}
+            <Header />
+            {router.pathname === "/" ? (
+              <Component />
+            ) : (
+              <main>
+                <Component {...pageProps} />
+              </main>
+            )}
+            <Footer />
+          </div>
         </NotificationProvider>
       </ApolloProvider>
     </>

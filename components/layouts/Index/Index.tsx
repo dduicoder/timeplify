@@ -1,8 +1,5 @@
 import { useState, FC, useEffect, useCallback } from "react";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
-
 import classes from "./Index.module.scss";
 import FirstSection from "./FirstSection";
 import SecondSection from "./SecondSection";
@@ -29,19 +26,10 @@ const Index: FC = () => {
     };
   }, [onIntersect, target]);
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   return (
     <>
       <FirstSection />
       <SecondSection refFunc={setTarget} />
-      <FontAwesomeIcon
-        icon={faChevronUp}
-        className={classes.up}
-        onClick={scrollToTop}
-      />
     </>
   );
 };

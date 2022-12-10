@@ -58,8 +58,8 @@ const NotificationProvider: FC<{
           return (
             <Notification
               key={note.id}
-              deleteNotification={deleteNotification}
               note={note}
+              deleteNotification={deleteNotification}
             />
           );
         })}

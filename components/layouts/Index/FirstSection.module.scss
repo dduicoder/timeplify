@@ -1,4 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,900&family=Roboto:ital,wght@1,900&display=swap");
+
 .first {
+  transform-style: preserve-3d;
+  transform: translateZ(-1rem) scale(2);
+  // will-change: auto;
   animation: pop-up 0.5s ease-in-out;
   min-height: calc(100vh - 4rem);
   display: flex;
@@ -56,23 +61,23 @@
 @keyframes pop-up {
   0% {
     opacity: 0;
-    transform: translateY(5%);
+    translate: 0 5%;
   }
   100% {
     opacity: 1;
-    transform: translateY(0);
+    translate: 0 0;
   }
 }
 
 @keyframes shake {
   0% {
-    transform: translateY(0);
-  }
-  50% {
     transform: translateY(0.5rem);
   }
-  100% {
+  50% {
     transform: translateY(0);
+  }
+  100% {
+    transform: translateY(0.5rem);
   }
 }
 

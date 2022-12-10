@@ -20,10 +20,19 @@
 
 body {
   margin: 0;
-  scroll-behavior: smooth;
 }
 
-#main {
+.wrapper {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  height: 100vh;
+}
+
+.index {
+  perspective: 1rem;
+}
+
+main {
   margin: 2rem auto;
   padding: 0 1rem;
   min-height: calc(100vh - 8rem);
@@ -63,6 +72,20 @@ textarea {
     outline-offset: -1.5px;
     outline: 3px solid rgba(0, 125, 250, 0.5);
   }
+}
+
+#up {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  width: 1rem;
+  height: 1rem;
+  padding: 0.5rem;
+  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
+  background-color: rgba($color: white, $alpha: 0.8);
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 3;
 }
 
 .loading-bar {
