@@ -1,4 +1,5 @@
 import { useState, useEffect, FC } from "react";
+import { useNotification } from "../notification/NotificationProvider";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX, faCheck } from "@fortawesome/free-solid-svg-icons";
@@ -34,10 +35,17 @@ const CalendarItem: FC<CalendarItemType> = ({ calendar, onDeleteCalendar }) => {
     new Date().toTimeString().split(" ")[0].split(":")
   );
 
+  const notice = useNotification();
+
   const { id, text, start, end } = calendar;
 
   const removeCalendar = () => {
     setShow(false);
+
+    notice({
+      type: "SUCCESS",
+      message: "Calendar removed!",
+    });
 
     setTimeout(() => {
       onDeleteCalendar(id);

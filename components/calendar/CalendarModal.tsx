@@ -79,7 +79,7 @@ const CalendarModal = ({ show, close, onAddCalendar }: PropsType) => {
   return (
     <>
       <Backdrop show={show} close={close} />
-      <Portal>
+      <Portal query=".overlays">
         <CSSTransition
           nodeRef={ref}
           mountOnEnter

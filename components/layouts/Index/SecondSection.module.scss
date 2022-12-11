@@ -10,7 +10,7 @@
   color: white;
   scroll-margin: 4rem;
   min-height: calc(100vh - 4rem);
-  padding: 4rem 1.5rem;
+  padding: 3rem 1.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -89,12 +89,12 @@
 
 @media (max-width: 866px) {
   .second {
-    padding-top: 1rem;
-    & > div {
+    // padding-top: 2rem;
+    .content {
       grid-template-columns: 1fr;
 
-      :first-child,
-      :last-child {
+      .content__first,
+      .content__second {
         grid-column: unset;
       }
     }

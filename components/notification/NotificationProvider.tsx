@@ -7,6 +7,7 @@ import {
   Dispatch,
 } from "react";
 import { v4 } from "uuid";
+import Portal from "../UI/Portal";
 
 import Notification from "./Notification";
 
@@ -53,17 +54,19 @@ const NotificationProvider: FC<{
 
   return (
     <NotificationContext.Provider value={dispatch}>
-      <div className={classes.notifications}>
-        {state.map((note: NoticeType) => {
-          return (
-            <Notification
-              key={note.id}
-              note={note}
-              deleteNotification={deleteNotification}
-            />
-          );
-        })}
-      </div>
+      <Portal query=".overlays">
+        <div className={classes.notifications}>
+          {state.map((note: NoticeType) => {
+            return (
+              <Notification
+                key={note.id}
+                note={note}
+                deleteNotification={deleteNotification}
+              />
+            );
+          })}
+        </div>
+      </Portal>
       {children}
     </NotificationContext.Provider>
   );

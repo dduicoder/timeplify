@@ -5,10 +5,18 @@
     grid-gap: 1rem;
     margin-bottom: 1rem;
 
+    @media (max-width: 866px) {
+      grid-template-columns: 1fr;
+    }
+
     a {
       padding: 1rem;
       border-radius: 1rem;
       background-color: rgba($color: #000000, $alpha: 0.025);
+
+      ul:has(li) {
+        margin-top: 0.5rem;
+      }
     }
   }
 

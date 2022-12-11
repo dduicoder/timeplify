@@ -22,13 +22,10 @@ body {
   margin: 0;
 }
 
-.wrapper {
+#__next:has(.index) {
   overflow-x: hidden;
   scroll-behavior: smooth;
   height: 100vh;
-}
-
-.index {
   perspective: 1rem;
 }
 
@@ -77,7 +74,7 @@ textarea {
 #up {
   position: fixed;
   bottom: 1rem;
-  left: 1rem;
+  right: 1rem;
   width: 1rem;
   height: 1rem;
   padding: 0.5rem;

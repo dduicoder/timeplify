@@ -15,7 +15,7 @@ const Backdrop: FC<BackdropProps> = ({ show, close }) => {
   const ref = useRef<HTMLDivElement>(null);
 
   return (
-    <Portal>
+    <Portal query=".overlays">
       <CSSTransition
         nodeRef={ref}
         mountOnEnter

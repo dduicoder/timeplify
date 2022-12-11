@@ -15,6 +15,7 @@ import Footer from "../components/layouts/Footer";
 import Head from "next/head";
 
 import "../styles/globals.scss";
+import Portal from "../components/UI/Portal";
 
 const App = ({ Component, pageProps }: AppProps) => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -38,14 +39,11 @@ const App = ({ Component, pageProps }: AppProps) => {
 
   const scrollToTop = () => {
     let wrapper;
-    // if (isIndex) {
-    // } else {
-    //   wrapper = window;
-    // }
-    wrapper = document.querySelector(".wrapper");
-
-    console.log(wrapper);
-
+    if (isIndex) {
+      wrapper = document.querySelector("#__next");
+    } else {
+      wrapper = window;
+    }
     wrapper?.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -58,21 +56,25 @@ const App = ({ Component, pageProps }: AppProps) => {
       </Head>
       <ApolloProvider client={client}>
         <NotificationProvider>
-          <div id="overlays">
-            <FontAwesomeIcon icon={faChevronUp} id="up" onClick={scrollToTop} />
-          </div>
-          <div className={`wrapper ${isIndex ? "index" : ""}`}>
-            {loading && <div className="loading-bar" />}
-            <Header />
-            {router.pathname === "/" ? (
-              <Component />
-            ) : (
-              <main>
-                <Component {...pageProps} />
-              </main>
+          <div className={`overlays ${isIndex ? "index" : ""}`}>
+            {isIndex ? null : (
+              <FontAwesomeIcon
+                icon={faChevronUp}
+                id="up"
+                onClick={scrollToTop}
+              />
             )}
-            <Footer />
           </div>
+          {loading && <div className="loading-bar" />}
+          <Header />
+          {isIndex ? (
+            <Component />
+          ) : (
+            <main>
+              <Component {...pageProps} />
+            </main>
+          )}
+          <Footer />
         </NotificationProvider>
       </ApolloProvider>
     </>
