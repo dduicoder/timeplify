@@ -7,8 +7,8 @@ import {
   Dispatch,
 } from "react";
 import { v4 } from "uuid";
-import Portal from "../UI/Portal";
 
+import Portal from "../UI/Portal";
 import Notification from "./Notification";
 
 import classes from "./NotificationProvider.module.scss";

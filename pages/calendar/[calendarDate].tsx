@@ -20,7 +20,7 @@ type DateType = {
 const CalendarPage: NextPage<{
   date: string;
 }> = ({ date }) => {
-  const titleText = `Calendar of ${date}`;
+  const titleText = `Timeplifey - ${date}`;
 
   return (
     <>
@@ -37,9 +37,16 @@ export default CalendarPage;
 export const getStaticPaths = async () => {
   // const { data } = await client.query({ query: ALL_DATES });
 
-  const dates = ["2022-11-19", "2022-11-20"];
+  const dates: string[] = [];
+  let today = new Date();
 
-  // console.log(data.);
+  for (let i = 0; i <= 10; i++) {
+    const targetDate = new Date();
+    targetDate.setDate(today.getDate() + i);
+    dates.push(targetDate.toISOString().slice(0, 10));
+  }
+
+  // console.log(dates);
 
   return {
     fallback: "blocking",

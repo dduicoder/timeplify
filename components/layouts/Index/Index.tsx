@@ -1,8 +1,9 @@
 import { useState, FC, useEffect, useCallback } from "react";
 
-import classes from "./Index.module.scss";
 import FirstSection from "./FirstSection";
 import SecondSection from "./SecondSection";
+
+import classes from "./Index.module.scss";
 
 const Index: FC = () => {
   const [target, setTarget] = useState<HTMLElement | null | undefined>(null);

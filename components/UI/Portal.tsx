@@ -12,7 +12,7 @@ const Portal: FC<{ query: string; children: ReactNode }> = ({
   }, [setMounted]);
 
   return mounted
-    ? createPortal(children, document.querySelector(".overlays")!)
+    ? createPortal(children, document.querySelector(query)!)
     : null;
 };
 

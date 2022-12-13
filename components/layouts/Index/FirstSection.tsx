@@ -1,11 +1,11 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { FC } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 import classes from "./FirstSection.module.scss";
-import { useRouter } from "next/router";
 
 const FirstSection: FC = () => {
   const router = useRouter();

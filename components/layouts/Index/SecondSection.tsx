@@ -1,4 +1,4 @@
-import { FC, Dispatch, SetStateAction, useState, useEffect } from "react";
+import { FC, Dispatch, SetStateAction, useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {

@@ -40,11 +40,11 @@ const CalendarHome: FC = () => {
     return <div className="loading-spinner" />;
   }
 
-  const today = new Date().toISOString().slice(0, 10);
-
   const onClick = () => {
     router.push(`/calendar/${today}`);
   };
+
+  const today = new Date().toISOString().slice(0, 10);
 
   const dates: DateType[] = data.allDates;
 
