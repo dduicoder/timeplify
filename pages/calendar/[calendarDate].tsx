@@ -1,21 +1,21 @@
-import { gql, useQuery } from "@apollo/client";
+// import { gql, useQuery } from "@apollo/client";
 import { GetStaticPropsContext, NextPage } from "next";
 import Head from "next/head";
 
 import Calendar from "../../components/calendar/Calendar";
-import client from "../../graphql/client";
+// import client from "../../graphql/client";
 
-const ALL_DATES = gql`
-  query AllDates {
-    allDates {
-      date
-    }
-  }
-`;
+// const ALL_DATES = gql`
+//   query AllDates {
+//     allDates {
+//       date
+//     }
+//   }
+// `;
 
-type DateType = {
-  date: string;
-};
+// type DateType = {
+//   date: string;
+// };
 
 const CalendarPage: NextPage<{
   date: string;

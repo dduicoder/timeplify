@@ -1,4 +1,4 @@
-import { SyntheticEvent, useEffect, useRef } from "react";
+import { SyntheticEvent, useEffect, useRef, useState } from "react";
 import { useNotification } from "../notification/NotificationProvider";
 
 import { CSSTransition } from "react-transition-group";
@@ -25,6 +25,8 @@ type PropsType = {
 const CalendarModal = ({ show, close, onAddCalendar }: PropsType) => {
   const ref = useRef<HTMLDivElement>(null);
 
+  const [showTime, setShowTime] = useState<boolean>(true);
+
   const notice = useNotification();
 
   const submitHandler = (event: SyntheticEvent) => {
@@ -40,28 +42,40 @@ const CalendarModal = ({ show, close, onAddCalendar }: PropsType) => {
       datas.push(data[1] as string);
     }
 
-    const [description, start, end] = datas;
+    const [text, start, end] = datas;
 
-    if (description.trim().length === 0 || start >= end) {
+    if (text.trim().length === 0) {
       notice({
         type: "ERROR",
-        message:
-          description.trim().length === 0
-            ? "Please write a description"
-            : "Please check your calendar time",
+        message: "Please write a text",
       });
 
       return;
     }
 
-    onAddCalendar({ text: description, start, end });
+    if (showTime && start >= end) {
+      notice({
+        type: "ERROR",
+        message: "Please check your calendar time",
+      });
+
+      return;
+    }
+
+    onAddCalendar({ text, start, end });
 
     notice({
       type: "SUCCESS",
-      message: "Calendar made!",
+      message: `Calendar made! (${text})`,
     });
 
     close();
+  };
+
+  const checkboxChangeHandler = (event: SyntheticEvent) => {
+    const target = event.target as HTMLInputElement;
+
+    setShowTime(target.checked);
   };
 
   useEffect(() => {
@@ -92,22 +106,26 @@ const CalendarModal = ({ show, close, onAddCalendar }: PropsType) => {
           }}
         >
           <div ref={ref} className={classes.modal}>
-            <section className={classes.control}>
+            <div className={classes.control}>
               <h1>New Calendar</h1>
               <FontAwesomeIcon icon={faXmark} onClick={close} />
-            </section>
+            </div>
             <form onSubmit={submitHandler}>
-              <label htmlFor="calendar-description">Title</label>
+              <label htmlFor="calendar-text">Title</label>
+              <input type="text" name="text" id="calendar-text" autoFocus />
+              <label htmlFor="calendar-time">Time</label>
               <input
-                type="text"
-                name="description"
-                id="calendar-description"
-                autoFocus
+                type="checkbox"
+                id="calendar-time"
+                onChange={checkboxChangeHandler}
+                checked={showTime}
               />
-              <label htmlFor="calendar-start">Start time</label>
-              <input type="time" name="start" id="calendar-start" />
-              <label htmlFor="calendar-end">End time</label>
-              <input type="time" name="end" id="calendar-end" />
+              <div style={{ display: showTime ? "block" : "none" }}>
+                <label htmlFor="calendar-start">Start time</label>
+                <input type="time" name="start" id="calendar-start" />
+                <label htmlFor="calendar-end">End time</label>
+                <input type="time" name="end" id="calendar-end" />
+              </div>
               <div className={classes.action}>
                 <button className="btn" type="button" onClick={close}>
                   Cancel

@@ -1,10 +1,10 @@
 import { useState, useEffect, FC } from "react";
-import { useNotification } from "../notification/NotificationProvider";
+import { useNotification } from "../../notification/NotificationProvider";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX, faCheck } from "@fortawesome/free-solid-svg-icons";
 
-import classes from "./CalendarItem.module.scss";
+import classes from "./CalendarItems.module.scss";
 
 type CalendarType = {
   id: string;
@@ -13,7 +13,7 @@ type CalendarType = {
   end: string;
 };
 
-type CalendarItemType = {
+type TimeItemType = {
   calendar: CalendarType;
   onDeleteCalendar: (id: string) => void;
 };
@@ -29,7 +29,7 @@ const getTime = (date: string[], sec: string) => {
   ).getTime();
 };
 
-const CalendarItem: FC<CalendarItemType> = ({ calendar, onDeleteCalendar }) => {
+const TimeItem: FC<TimeItemType> = ({ calendar, onDeleteCalendar }) => {
   const [show, setShow] = useState<boolean>(true);
   const [currentDate, setCurrentDate] = useState<string[]>(
     new Date().toTimeString().split(" ")[0].split(":")
@@ -44,7 +44,7 @@ const CalendarItem: FC<CalendarItemType> = ({ calendar, onDeleteCalendar }) => {
 
     notice({
       type: "SUCCESS",
-      message: "Calendar removed!",
+      message: `Calendar removed! (${text})`,
     });
 
     setTimeout(() => {
@@ -72,10 +72,14 @@ const CalendarItem: FC<CalendarItemType> = ({ calendar, onDeleteCalendar }) => {
 
   const progress = Math.floor((timeCompleted / timeSum) * 100);
 
+  const minutes = timeSum / 1000 / 60;
+
   return (
     <li className={`${classes.item} ${!show ? classes.close : ""}`}>
       <div className={classes.info}>
-        <span>{text}</span>
+        <span>
+          {text} ({minutes} minutes)
+        </span>
         <span>
           {start} ~ {end}
         </span>
@@ -93,4 +97,4 @@ const CalendarItem: FC<CalendarItemType> = ({ calendar, onDeleteCalendar }) => {
   );
 };
 
-export default CalendarItem;
+export default TimeItem;

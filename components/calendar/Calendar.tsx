@@ -6,7 +6,8 @@ import { v4 } from "uuid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
-import CalendarItem from "./CalendarItem";
+import TimeItem from "./CalendarItems/TimeItem";
+import PlanItem from "./CalendarItems/PlanItem";
 import CalendarModal from "./CalendarModal";
 
 import classes from "./Calendar.module.scss";
@@ -64,6 +65,7 @@ const Calendar: FC<{ date: string }> = ({ date }) => {
       },
     ],
   });
+
   const [removeCalendar] = useMutation(REMOVE_CALENDAR, {
     refetchQueries: [
       {
@@ -138,13 +140,21 @@ const Calendar: FC<{ date: string }> = ({ date }) => {
         </div>
       )}
       <ul className={classes.list}>
-        {calendars.map((item: CalendarType) => (
-          <CalendarItem
-            key={item.id}
-            calendar={item}
-            onDeleteCalendar={deleteCalendar}
-          />
-        ))}
+        {calendars.map((item: CalendarType) =>
+          item.start === "" ? (
+            <PlanItem
+              key={item.id}
+              calendar={item}
+              onDeleteCalendar={deleteCalendar}
+            />
+          ) : (
+            <TimeItem
+              key={item.id}
+              calendar={item}
+              onDeleteCalendar={deleteCalendar}
+            />
+          )
+        )}
       </ul>
       <div className={classes.action}>
         <button
