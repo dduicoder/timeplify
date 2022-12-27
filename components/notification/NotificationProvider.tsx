@@ -6,7 +6,6 @@ import {
   useReducer,
   Dispatch,
 } from "react";
-import { v4 } from "uuid";
 
 import Portal from "../UI/Portal";
 import Notification from "./Notification";
@@ -79,7 +78,7 @@ export const useNotification = () => {
     dispatch({
       type: "ADD_NOTIFICATION",
       payload: {
-        id: v4(),
+        id: crypto.randomUUID(),
         ...props,
       },
     });

@@ -1,7 +1,6 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
 import Link from "next/link";
 import { FC, useState } from "react";
-import { v4 } from "uuid";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
@@ -84,7 +83,7 @@ const Calendar: FC<{ date: string }> = ({ date }) => {
   const calendars = queryData.getDate.calendars;
 
   const newCalendar = (data: { text: string; start: string; end: string }) => {
-    addCalendar({ variables: { date, id: v4(), ...data } });
+    addCalendar({ variables: { date, id: crypto.randomUUID(), ...data } });
   };
 
   const deleteCalendar = (id: string) => {
