@@ -18,13 +18,12 @@
   .content {
     opacity: 0;
     width: min(100%, 70rem);
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-gap: 1.5rem;
-    place-items: center;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
 
     .content__first {
-      grid-column: 1 / 4;
+      flex: 2;
 
       h1 {
         font-size: 3rem;
@@ -68,7 +67,7 @@
     }
 
     .content__second {
-      grid-column: 4 / 6;
+      flex: 1;
       &.pop {
         animation: pop-up 0.5s ease-in-out;
       }
@@ -91,11 +90,10 @@
   .second {
     // padding-top: 2rem;
     .content {
-      grid-template-columns: 1fr;
-
+      flex-direction: column;
       .content__first,
       .content__second {
-        grid-column: unset;
+        flex: unset;
       }
     }
   }

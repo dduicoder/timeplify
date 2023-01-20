@@ -115,6 +115,10 @@ const Calendar: FC<{ date: string }> = ({ date }) => {
 
   const isFuture = calendarDate > today;
 
+  const isPast =
+    calendarDate.toISOString().slice(0, 10).split("-").join("") <
+    today.toISOString().slice(0, 10).split("-").join("");
+
   return (
     <section>
       <CalendarModal
@@ -143,12 +147,14 @@ const Calendar: FC<{ date: string }> = ({ date }) => {
           item.start === "" ? (
             <PlanItem
               key={item.id}
+              isPast={isPast}
               calendar={item}
               onDeleteCalendar={deleteCalendar}
             />
           ) : (
             <TimeItem
               key={item.id}
+              isPast={isPast}
               calendar={item}
               onDeleteCalendar={deleteCalendar}
             />

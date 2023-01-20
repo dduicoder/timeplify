@@ -72,8 +72,10 @@ const SecondSection: FC<Props> = ({ refFunc }) => {
               <li
                 key={i}
                 onClick={() => {
-                  setFocus(i);
-                  setAnimation();
+                  if (focus !== i) {
+                    setFocus(i);
+                    setAnimation();
+                  }
                 }}
                 className={focus === i ? classes.focus : ""}
               >

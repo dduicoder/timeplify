@@ -14,6 +14,7 @@ type CalendarType = {
 };
 
 type TimeItemType = {
+  isPast: boolean;
   calendar: CalendarType;
   onDeleteCalendar: (id: string) => void;
 };
@@ -29,7 +30,7 @@ const getTime = (date: string[], sec: string) => {
   ).getTime();
 };
 
-const TimeItem: FC<TimeItemType> = ({ calendar, onDeleteCalendar }) => {
+const TimeItem: FC<TimeItemType> = ({ isPast, calendar, onDeleteCalendar }) => {
   const [show, setShow] = useState<boolean>(true);
   const [currentDate, setCurrentDate] = useState<string[]>(
     new Date().toTimeString().split(" ")[0].split(":")
@@ -40,6 +41,15 @@ const TimeItem: FC<TimeItemType> = ({ calendar, onDeleteCalendar }) => {
   const { id, text, start, end } = calendar;
 
   const removeCalendar = () => {
+    if (isPast) {
+      notice({
+        type: "ERROR",
+        message: "Cannot remove past events",
+      });
+
+      return;
+    }
+
     setShow(false);
 
     notice({
