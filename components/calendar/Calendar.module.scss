@@ -1,17 +1,5 @@
-.control {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
-
-  svg {
-    font-size: 1.25rem;
-    cursor: pointer;
-  }
-
-  h1 {
-    margin: 0;
-  }
+.calendar {
+  text-align: center;
 }
 
 .error {

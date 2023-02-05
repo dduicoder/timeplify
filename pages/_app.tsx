@@ -6,16 +6,14 @@ import client from "../graphql/client";
 
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
-
 import NotificationProvider from "../components/notification/NotificationProvider";
+import Up from "../components/UI/Up";
 import Header from "../components/layouts/Header";
 import Footer from "../components/layouts/Footer";
 import Head from "next/head";
 
+import "../styles/calendar.scss";
 import "../styles/globals.scss";
-import Portal from "../components/UI/Portal";
 
 const App = ({ Component, pageProps }: AppProps) => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -37,16 +35,6 @@ const App = ({ Component, pageProps }: AppProps) => {
     };
   });
 
-  const scrollToTop = () => {
-    let wrapper;
-    if (isIndex) {
-      wrapper = document.querySelector("#__next");
-    } else {
-      wrapper = window;
-    }
-    wrapper?.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   const isIndex = router.pathname === "/";
 
   return (
@@ -56,25 +44,25 @@ const App = ({ Component, pageProps }: AppProps) => {
       </Head>
       <ApolloProvider client={client}>
         <NotificationProvider>
-          <div className={`overlays ${isIndex ? "index" : ""}`}>
-            {isIndex ? null : (
-              <FontAwesomeIcon
-                icon={faChevronUp}
-                id="up"
-                onClick={scrollToTop}
-              />
-            )}
+          <div className="overlays">
+            <Up />
           </div>
           {loading && <div className="loading-bar" />}
-          <Header />
           {isIndex ? (
-            <Component />
-          ) : (
-            <main>
-              <Component {...pageProps} />
+            <main className="index">
+              <Header />
+              <Component />
+              <Footer />
             </main>
+          ) : (
+            <>
+              <Header />
+              <main>
+                <Component {...pageProps} />
+              </main>
+              <Footer />
+            </>
           )}
-          <Footer />
         </NotificationProvider>
       </ApolloProvider>
     </>

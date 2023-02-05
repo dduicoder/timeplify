@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { FC } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,14 +7,6 @@ import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import classes from "./FirstSection.module.scss";
 
 const FirstSection: FC = () => {
-  const router = useRouter();
-
-  const today = new Date().toISOString().slice(0, 10);
-
-  const onClick = () => {
-    router.push(`/calendar/${today}`);
-  };
-
   const onScroll = () => {
     const secondSection = document.querySelectorAll("#__next section")[1];
 
@@ -35,12 +26,12 @@ const FirstSection: FC = () => {
           deleniti reprehenderit officiis consectetur!
         </p>
         <div className={classes.action}>
-          <Link href="/calendar">
-            <button className="btn">All Calendars</button>
+          <Link href="/pomodoro">
+            <button className="btn">Pomodoro</button>
           </Link>
-          <button className="btn-flat" onClick={onClick}>
-            Todays Calendar
-          </button>
+          <Link href="/calendar">
+            <button className="btn-flat">Calendar</button>
+          </Link>
         </div>
         <span>Learn about Timeplifey</span>
         <FontAwesomeIcon icon={faChevronDown} onClick={onScroll} />

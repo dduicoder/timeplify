@@ -14,12 +14,11 @@ type CalendarType = {
 };
 
 type PlanItemType = {
-  isPast: boolean;
   calendar: CalendarType;
   onDeleteCalendar: (id: string) => void;
 };
 
-const PlanItem: FC<PlanItemType> = ({ isPast, calendar, onDeleteCalendar }) => {
+const PlanItem: FC<PlanItemType> = ({ calendar, onDeleteCalendar }) => {
   const [show, setShow] = useState<boolean>(true);
 
   const notice = useNotification();
@@ -27,15 +26,6 @@ const PlanItem: FC<PlanItemType> = ({ isPast, calendar, onDeleteCalendar }) => {
   const { id, text } = calendar;
 
   const removeCalendar = () => {
-    if (isPast) {
-      notice({
-        type: "ERROR",
-        message: "Cannot remove past events",
-      });
-
-      return;
-    }
-
     setShow(false);
 
     notice({

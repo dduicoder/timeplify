@@ -12,8 +12,14 @@
   z-index: 5;
 
   & > a {
-    font-size: 1.5rem;
-    font-weight: bold;
+    svg {
+      font-size: 1.25rem;
+      margin-right: 1rem;
+    }
+    span {
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
   }
 
   .nav {

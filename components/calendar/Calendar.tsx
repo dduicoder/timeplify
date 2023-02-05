@@ -1,9 +1,7 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
-import Link from "next/link";
 import { FC, useState } from "react";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { Calendar as ReactCalendar } from "react-calendar";
 
 import TimeItem from "./CalendarItems/TimeItem";
 import PlanItem from "./CalendarItems/PlanItem";
@@ -51,16 +49,25 @@ type CalendarType = {
   end: string;
 };
 
-const Calendar: FC<{ date: string }> = ({ date }) => {
-  const { data: queryData, loading: queryLoading } = useQuery(GET_DATE, {
-    variables: { date },
+const Calendar: FC = () => {
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [date, setDate] = useState<Date>(new Date());
+
+  const dateText = date.toISOString().slice(0, 10);
+
+  const {
+    data: queryData,
+    loading,
+    refetch,
+  } = useQuery(GET_DATE, {
+    variables: { date: dateText },
   });
 
   const [addCalendar] = useMutation(ADD_CALENDAR, {
     refetchQueries: [
       {
         query: GET_DATE,
-        variables: { date },
+        variables: { date: dateText },
       },
     ],
   });
@@ -69,36 +76,22 @@ const Calendar: FC<{ date: string }> = ({ date }) => {
     refetchQueries: [
       {
         query: GET_DATE,
-        variables: { date },
+        variables: { date: dateText },
       },
     ],
   });
 
-  const [showModal, setShowModal] = useState<boolean>(false);
-
-  if (queryLoading) {
-    return <div className="loading-spinner" />;
-  }
-
-  const calendars = queryData.getDate.calendars;
+  const calendars = queryData?.getDate.calendars;
 
   const newCalendar = (data: { text: string; start: string; end: string }) => {
-    addCalendar({ variables: { date, id: crypto.randomUUID(), ...data } });
+    addCalendar({
+      variables: { date: dateText, id: crypto.randomUUID(), ...data },
+    });
   };
 
   const deleteCalendar = (id: string) => {
-    removeCalendar({ variables: { date, id } });
+    removeCalendar({ variables: { date: dateText, id } });
   };
-
-  const getDateLink = (targetDate: number) => {
-    const tempDate = new Date(date);
-    tempDate.setDate(calendarDate.getDate() + targetDate);
-    const text = tempDate.toISOString().slice(0, 10);
-
-    return `/calendar/${text}`;
-  };
-
-  const calendarDate = new Date(date);
 
   const today = new Date();
 
@@ -108,16 +101,18 @@ const Calendar: FC<{ date: string }> = ({ date }) => {
   });
 
   const daysPassed = Math.ceil(
-    (calendarDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
+    (date.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
   );
 
   const daysPassedText = formatter.format(daysPassed, "day");
 
-  const isFuture = calendarDate > today;
+  const calendarChangeHandler = (newDate: Date) => {
+    newDate.setHours(9);
+    const newDateText = newDate.toISOString().slice(0, 10);
 
-  const isPast =
-    calendarDate.toISOString().slice(0, 10).split("-").join("") <
-    today.toISOString().slice(0, 10).split("-").join("");
+    setDate(newDate);
+    refetch({ date: newDateText });
+  };
 
   return (
     <section>
@@ -126,47 +121,42 @@ const Calendar: FC<{ date: string }> = ({ date }) => {
         close={() => setShowModal(false)}
         onAddCalendar={newCalendar}
       />
-      <div className={classes.control}>
-        <Link href={getDateLink(-1)}>
-          <FontAwesomeIcon icon={faArrowLeft} />
-        </Link>
-        <h1>
-          {calendarDate.toLocaleDateString()} ({daysPassedText})
-        </h1>
-        <Link href={getDateLink(1)}>
-          <FontAwesomeIcon icon={faArrowRight} />
-        </Link>
-      </div>
-      {calendars.length === 0 && (
-        <div className={classes.error}>
-          <p>- No Calendars{isFuture ? "(future)" : ""} -</p>
-        </div>
+      <ReactCalendar
+        onChange={calendarChangeHandler}
+        value={date}
+        minDetail="year"
+      />
+      {loading ? (
+        <div className="loading-spinner" />
+      ) : (
+        <>
+          <h1>{daysPassedText}</h1>
+          {calendars?.length === 0 && (
+            <div className={classes.error}>
+              <p>- No Calendars -</p>
+            </div>
+          )}
+          <ul className={classes.list}>
+            {calendars?.map((item: CalendarType) =>
+              item.start === "" ? (
+                <PlanItem
+                  key={item.id}
+                  calendar={item}
+                  onDeleteCalendar={deleteCalendar}
+                />
+              ) : (
+                <TimeItem
+                  key={item.id}
+                  calendar={item}
+                  onDeleteCalendar={deleteCalendar}
+                />
+              )
+            )}
+          </ul>
+        </>
       )}
-      <ul className={classes.list}>
-        {calendars.map((item: CalendarType) =>
-          item.start === "" ? (
-            <PlanItem
-              key={item.id}
-              isPast={isPast}
-              calendar={item}
-              onDeleteCalendar={deleteCalendar}
-            />
-          ) : (
-            <TimeItem
-              key={item.id}
-              isPast={isPast}
-              calendar={item}
-              onDeleteCalendar={deleteCalendar}
-            />
-          )
-        )}
-      </ul>
       <div className={classes.action}>
-        <button
-          className="btn-flat"
-          onClick={() => setShowModal(true)}
-          disabled={isFuture}
-        >
+        <button className="btn-flat" onClick={() => setShowModal(true)}>
           New Calendar
         </button>
       </div>

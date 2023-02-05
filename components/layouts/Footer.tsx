@@ -37,7 +37,7 @@ const Footer: FC = () => {
           </span>
         </div>
       </div>
-      <p>Copyright 2022. All rights reserved by Sijin Park.</p>
+      <p>Copyright 2023. All rights reserved by Sijin Park.</p>
     </footer>
   );
 };
