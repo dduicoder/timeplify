@@ -59,7 +59,7 @@ const TimeItem: FC<TimeItemType> = ({ calendar, onDeleteCalendar }) => {
         clearInterval(interval);
       }
       setCurrentDate(newDate);
-    }, 1000);
+    }, 60000);
 
     return () => clearInterval(interval);
   }, []);

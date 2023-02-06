@@ -7,7 +7,7 @@ const ErrorPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Timeplifey - 404 Not Found</title>
+        <title>404 Not Found - Timeplifey</title>
       </Head>
       <NotFound />
     </>

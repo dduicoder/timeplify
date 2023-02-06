@@ -56,7 +56,7 @@ const CalendarModal = ({ show, close, onAddCalendar }: PropsType) => {
     if (showTime && start >= end) {
       notice({
         type: "ERROR",
-        message: "Please check your calendar time",
+        message: "Please check your calendar's time",
       });
 
       return;

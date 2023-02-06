@@ -14,7 +14,7 @@
       background: none;
       font-size: 1.25rem;
       font-weight: bold;
-      border-radius: 1rem;
+      border-radius: 0.75rem;
       padding: 0.5rem 1rem;
       transition: background-color 0.25s ease-in-out;
 
@@ -33,30 +33,27 @@
       margin-bottom: 1rem;
     }
 
-    .react-calendar__month-view__days,
-    .react-calendar__year-view__months {
-      .react-calendar__tile {
-        border-radius: 1rem;
-        padding: 0.5rem 0;
-        transition: all 0.2s;
-        background-color: transparent;
-        &:hover {
-          background: rgba($color: black, $alpha: 0.05);
-          color: var(--main-color);
-        }
-      }
-
-      .react-calendar__tile--active {
-        background: var(--main-color) !important;
-        color: white !important;
-      }
-
-      .react-calendar__tile--now {
-        background: rgba($color: black, $alpha: 0.075);
+    .react-calendar__tile {
+      border-radius: 0.75rem;
+      padding: 0.5rem 0;
+      transition: all 0.25s ease-in-out;
+      background-color: transparent;
+      &:hover {
+        background: rgba($color: black, $alpha: 0.05);
         color: var(--main-color);
-        &:hover {
-          background: rgba($color: black, $alpha: 0.1);
-        }
+      }
+    }
+
+    .react-calendar__tile--active {
+      background: var(--main-color) !important;
+      color: white !important;
+    }
+
+    .react-calendar__tile--now {
+      background: rgba($color: black, $alpha: 0.075);
+      color: var(--main-color);
+      &:hover {
+        background: rgba($color: black, $alpha: 0.1);
       }
     }
   }

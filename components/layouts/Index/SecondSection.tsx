@@ -66,7 +66,7 @@ const SecondSection: FC<Props> = ({ refFunc }) => {
     <section className={classes.second}>
       <div ref={refFunc} className={classes.content}>
         <div className={classes["content__first"]}>
-          <h1>Save your time with Timeplifey</h1>
+          <h1>Use your time wisely with Timeplifey</h1>
           <ul className={classes["content__first-list"]}>
             {infoList.map(({ icon, text, subText }, i) => (
               <li

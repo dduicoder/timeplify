@@ -10,11 +10,13 @@ const Up = () => {
 
   const scrollToTop = () => {
     let wrapper;
+
     if (router.pathname === "/") {
       wrapper = document.querySelector("main");
     } else {
       wrapper = window;
     }
+
     wrapper?.scrollTo({ top: 0, behavior: "smooth" });
   };
 

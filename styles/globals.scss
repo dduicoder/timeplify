@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Dosis&display=swap");
 
 :root {
   --main-color: rgb(100, 115, 230);
@@ -11,6 +12,7 @@
 * {
   box-sizing: border-box;
   font-family: "Inter", sans-serif;
+  // font-family: "Dosis", sans-serif;
 
   &::selection {
     color: white;

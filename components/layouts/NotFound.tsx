@@ -10,7 +10,7 @@ const NotFound = () => {
     <section className={classes.error}>
       <FontAwesomeIcon icon={faXmark} />
       <h3>404 Page not found</h3>
-      <p>Could not find page.</p>
+      <p>There is no such page.</p>
       <Link href="/">
         <button className="btn-flat">Home</button>
       </Link>

@@ -2,21 +2,41 @@
   & > h1 {
     margin-bottom: 2rem;
   }
+
   .clock {
-    margin-left: 20%;
+    cursor: pointer;
+    background-size: 200% auto;
+    transition: all 1s;
+    margin: auto;
     margin-bottom: 2rem;
     width: 60%;
     aspect-ratio: 1 / 1;
-    border: 1rem solid var(--main-color);
+    outline: 1rem solid rgba($color: white, $alpha: 0.25);
+    outline-offset: -1rem;
     border-radius: 50%;
+    box-shadow: none;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 
     h1 {
+      transition: all 1s ease-in-out;
       font-size: 3rem;
       margin: 0;
+    }
+
+    span {
+      transition: all 1s ease-in-out;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    &.break {
+      color: rgba($color: black, $alpha: 0.75);
+      outline-color: rgba($color: white, $alpha: 0.5);
+      box-shadow: 0 0 2rem rgba($color: black, $alpha: 0.05);
     }
   }
 
@@ -24,14 +44,25 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 3rem;
+    gap: 2rem;
 
     svg {
-      font-size: 1.5rem;
+      width: 1.5rem;
+      height: 1.5rem;
+      padding: 1rem;
+      border-radius: 50%;
       cursor: pointer;
+      font-size: 1.5rem;
+      transition: background-color 0.25s ease-in-out;
 
       &:nth-child(2) {
+        width: 2rem;
+        height: 2rem;
         font-size: 2rem;
+      }
+
+      &:hover {
+        background-color: rgba($color: black, $alpha: 0.05);
       }
     }
   }
