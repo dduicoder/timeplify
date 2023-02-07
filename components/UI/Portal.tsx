@@ -1,10 +1,9 @@
 import { FC, ReactNode, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
-const Portal: FC<{ query: string; children: ReactNode }> = ({
-  query,
-  children,
-}) => {
+type PropsType = { query: string; children: ReactNode };
+
+const Portal: FC<PropsType> = ({ query, children }) => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {

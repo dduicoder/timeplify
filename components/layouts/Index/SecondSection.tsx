@@ -9,11 +9,11 @@ import {
 
 import classes from "./SecondSection.module.scss";
 
-type Props = {
+type PropsType = {
   refFunc: Dispatch<SetStateAction<HTMLElement | null | undefined>>;
 };
 
-const SecondSection: FC<Props> = ({ refFunc }) => {
+const SecondSection: FC<PropsType> = ({ refFunc }) => {
   const [focus, setFocus] = useState<number>(0);
 
   const infoList = [

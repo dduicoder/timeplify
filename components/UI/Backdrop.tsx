@@ -6,12 +6,12 @@ import Portal from "./Portal";
 
 import classes from "./Backdrop.module.scss";
 
-type BackdropProps = {
+type PropsType = {
   show: boolean;
   close: () => void;
 };
 
-const Backdrop: FC<BackdropProps> = ({ show, close }) => {
+const Backdrop: FC<PropsType> = ({ show, close }) => {
   const ref = useRef<HTMLDivElement>(null);
 
   return (

@@ -10,12 +10,6 @@ import Portal from "../UI/Portal";
 
 import classes from "./CalendarModal.module.scss";
 
-type CalendarType = {
-  text: string;
-  start: string;
-  end: string;
-};
-
 type PropsType = {
   show: boolean;
   close: () => void;
@@ -42,12 +36,21 @@ const CalendarModal = ({ show, close, onAddCalendar }: PropsType) => {
       datas.push(data[1] as string);
     }
 
-    const [text, start, end] = datas;
+    const [text, start, end, description] = datas;
 
     if (text.trim().length === 0) {
       notice({
         type: "ERROR",
         message: "Please write a text",
+      });
+
+      return;
+    }
+
+    if (description.trim().length === 0) {
+      notice({
+        type: "ERROR",
+        message: "Please write a description",
       });
 
       return;
@@ -62,7 +65,7 @@ const CalendarModal = ({ show, close, onAddCalendar }: PropsType) => {
       return;
     }
 
-    onAddCalendar({ text, start, end });
+    onAddCalendar({ id: crypto.randomUUID(), text, start, end, description });
 
     notice({
       type: "SUCCESS",
@@ -126,6 +129,12 @@ const CalendarModal = ({ show, close, onAddCalendar }: PropsType) => {
                 <label htmlFor="calendar-end">End time</label>
                 <input type="time" name="end" id="calendar-end" />
               </div>
+              <label htmlFor="calendar-description">Description</label>
+              <textarea
+                name="description"
+                id="calendar-description"
+                rows={5}
+              ></textarea>
               <div className={classes.action}>
                 <button className="btn" type="button" onClick={close}>
                   Cancel

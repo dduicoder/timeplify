@@ -2,12 +2,6 @@ import { useState, useEffect, FC, useCallback } from "react";
 
 import classes from "./Notification.module.scss";
 
-type NoticeType = {
-  id: string;
-  type: string;
-  message: string;
-};
-
 type PropsType = {
   note: NoticeType;
   deleteNotification: (id: string) => void;

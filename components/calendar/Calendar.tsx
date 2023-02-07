@@ -3,8 +3,7 @@ import { FC, useState } from "react";
 
 import { Calendar as ReactCalendar } from "react-calendar";
 
-import TimeItem from "./CalendarItems/TimeItem";
-import PlanItem from "./CalendarItems/PlanItem";
+import CalendarItem from "./CalendarItem";
 import CalendarModal from "./CalendarModal";
 
 import classes from "./Calendar.module.scss";
@@ -17,6 +16,7 @@ const GET_DATE = gql`
         text
         start
         end
+        description
       }
     }
   }
@@ -29,8 +29,16 @@ const ADD_CALENDAR = gql`
     $text: String!
     $start: String!
     $end: String!
+    $description: String!
   ) {
-    addCalendar(date: $date, id: $id, text: $text, start: $start, end: $end) {
+    addCalendar(
+      date: $date
+      id: $id
+      text: $text
+      start: $start
+      end: $end
+      description: $description
+    ) {
       text
     }
   }
@@ -41,13 +49,6 @@ const REMOVE_CALENDAR = gql`
     removeCalendar(date: $date, id: $id)
   }
 `;
-
-type CalendarType = {
-  id: string;
-  text: string;
-  start: string;
-  end: string;
-};
 
 const Calendar: FC = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -83,14 +84,22 @@ const Calendar: FC = () => {
 
   const calendars = queryData?.getDate.calendars;
 
-  const newCalendar = (data: { text: string; start: string; end: string }) => {
+  const newCalendar = (data: CalendarType) => {
     addCalendar({
-      variables: { date: dateText, id: crypto.randomUUID(), ...data },
+      variables: { date: dateText, ...data },
     });
   };
 
   const deleteCalendar = (id: string) => {
     removeCalendar({ variables: { date: dateText, id } });
+  };
+
+  const calendarChangeHandler = (newDate: Date) => {
+    newDate.setHours(9);
+    const newDateText = newDate.toISOString().slice(0, 10);
+
+    setDate(newDate);
+    refetch({ date: newDateText });
   };
 
   const today = new Date();
@@ -104,15 +113,11 @@ const Calendar: FC = () => {
     (date.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
   );
 
+  const isToday =
+    date.toISOString().slice(0, 10).split("-").join("") ===
+    today.toISOString().slice(0, 10).split("-").join("");
+
   const daysPassedText = formatter.format(daysPassed, "day");
-
-  const calendarChangeHandler = (newDate: Date) => {
-    newDate.setHours(9);
-    const newDateText = newDate.toISOString().slice(0, 10);
-
-    setDate(newDate);
-    refetch({ date: newDateText });
-  };
 
   return (
     <section>
@@ -127,7 +132,7 @@ const Calendar: FC = () => {
         minDetail="year"
       />
       {loading ? (
-        <div className="loading-spinner" />
+        <div style={{ marginTop: "2rem" }} className="loading-spinner" />
       ) : (
         <>
           <h1>{daysPassedText}</h1>
@@ -137,21 +142,14 @@ const Calendar: FC = () => {
             </div>
           )}
           <ul className={classes.list}>
-            {calendars?.map((item: CalendarType) =>
-              item.start === "" ? (
-                <PlanItem
-                  key={item.id}
-                  calendar={item}
-                  onDeleteCalendar={deleteCalendar}
-                />
-              ) : (
-                <TimeItem
-                  key={item.id}
-                  calendar={item}
-                  onDeleteCalendar={deleteCalendar}
-                />
-              )
-            )}
+            {calendars?.map((item: CalendarType) => (
+              <CalendarItem
+                key={item.id}
+                isToday={isToday}
+                calendar={item}
+                onDeleteCalendar={deleteCalendar}
+              />
+            ))}
           </ul>
         </>
       )}

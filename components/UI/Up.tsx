@@ -1,3 +1,4 @@
+import { FC } from "react";
 import { useRouter } from "next/router";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -5,7 +6,7 @@ import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
 
 import classes from "./Up.module.scss";
 
-const Up = () => {
+const Up: FC = () => {
   const router = useRouter();
 
   const scrollToTop = () => {

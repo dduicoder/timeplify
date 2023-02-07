@@ -12,12 +12,6 @@ import Notification from "./Notification";
 
 import classes from "./NotificationProvider.module.scss";
 
-type NoticeType = {
-  id: string;
-  type: string;
-  message: string;
-};
-
 type ActionType =
   | {
       type: "ADD_NOTIFICATION";
