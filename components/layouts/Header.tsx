@@ -1,7 +1,7 @@
-import { useRouter } from "next/router";
-import Link from "next/link";
 import { FC } from "react";
+import { useRouter } from "next/router";
 
+import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
 

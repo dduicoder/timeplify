@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { FC } from "react";
 
+import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 

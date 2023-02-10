@@ -1,7 +1,9 @@
 import { FC, useState } from "react";
 
+import Head from "next/head";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faCircleInfo,
   faRotateLeft,
   faPlay,
   faPause,
@@ -9,10 +11,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import classes from "./Pomodoro.module.scss";
-import Head from "next/head";
 
 const gradients = [
-  ["#fbab7e", "#f7ce68"],
+  ["#f7ce68", "#fbab7e"],
   ["#21d4fd", "#b721ff"],
   ["#8ec5fc", "#e0c3fc"],
   ["#0093e9", "#80d0c7"],
@@ -20,17 +21,30 @@ const gradients = [
   ["#ff6a88", "#ff99ac"],
   ["#a9c9ff", "#ffbbec"],
   ["#5efce8", "#736efe"],
-  ["#50586C", "#DCE2F0"],
+  ["#dce2f0", "#50586c"],
+];
+
+const POMODORO_SECONDS = 1500;
+const REST_SECONDS = 300;
+const LONG_REST_SECONDS = 900;
+
+const steps = [
+  POMODORO_SECONDS,
+  REST_SECONDS,
+  POMODORO_SECONDS,
+  REST_SECONDS,
+  POMODORO_SECONDS,
+  REST_SECONDS,
+  POMODORO_SECONDS,
+  LONG_REST_SECONDS,
 ];
 
 const Pomodoro: FC = () => {
-  const POMODORO_SECONDS = 1500;
-  const REST_SECONDS = 300;
-
   const [isPomodoro, setIsPomodoro] = useState<boolean>(true);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [intervalID, setIntervalID] = useState<any>();
-  const [seconds, setSeconds] = useState<number>(POMODORO_SECONDS);
+  const [index, setIndex] = useState<number>(0);
+  const [seconds, setSeconds] = useState<number>(steps[index]);
 
   const secondsToMinutes = (s: number) =>
     (s - (s %= 60)) / 60 + (9 < s ? ":" : ":0") + s;
@@ -41,13 +55,14 @@ const Pomodoro: FC = () => {
     const interId = setInterval(() => {
       setSeconds((prevData) => {
         if (prevData <= 0) {
-          const newSecond = isPomodoro ? REST_SECONDS : POMODORO_SECONDS;
+          const nextIndex = index < 7 ? index + 1 : 0;
 
+          setIndex(nextIndex);
           setIsPlaying(false); //
           clearInterval(interId); // Do I delete these?
           setIsPomodoro(!isPomodoro);
 
-          return newSecond;
+          return steps[nextIndex];
         }
         return prevData - 1;
       });
@@ -63,24 +78,26 @@ const Pomodoro: FC = () => {
 
   const reset = () => {
     pauseTimer();
-    setSeconds(isPomodoro ? POMODORO_SECONDS : REST_SECONDS);
+    setSeconds(steps[index]);
   };
 
-  const forwardStep = () => {
+  const nextStep = () => {
+    const nextIndex = index < 7 ? index + 1 : 0;
+
     pauseTimer();
-    setSeconds(isPomodoro ? REST_SECONDS : POMODORO_SECONDS);
+    setSeconds(steps[nextIndex]);
+    setIndex(nextIndex);
     setIsPomodoro(!isPomodoro);
   };
 
   const progress =
-    (isPomodoro ? seconds / POMODORO_SECONDS : 1 - seconds / REST_SECONDS) *
-    100;
+    (isPomodoro
+      ? seconds / POMODORO_SECONDS
+      : 1 - seconds / (index < 7 ? REST_SECONDS : LONG_REST_SECONDS)) * 100;
 
   const statusText = isPomodoro ? "focus" : "chill";
 
   const todaysGradient = gradients[new Date().getDate() % 9];
-
-  console.log();
 
   return (
     <>
@@ -90,7 +107,12 @@ const Pomodoro: FC = () => {
         )} ${statusText} - Timeplifey`}</title>
       </Head>
       <section className={classes.pomodoro}>
-        <h1>Pomodoro</h1>
+        <div className={classes.control}>
+          <h1>{`Pomodoro(step ${index + 1})`}</h1>
+          <div>
+            <FontAwesomeIcon icon={faCircleInfo} />
+          </div>
+        </div>
         <div
           onClick={isPlaying ? pauseTimer : startTimer}
           className={`${classes.clock} ${isPlaying ? "" : classes.break}`}
@@ -99,12 +121,8 @@ const Pomodoro: FC = () => {
             backgroundPositionX: `${progress}%`,
           }}
         >
-          <h1 className={isPlaying ? "" : classes.break}>
-            {secondsToMinutes(seconds)}
-          </h1>
-          <span className={isPlaying ? "" : classes.break}>
-            {isPlaying ? statusText : "break"}
-          </span>
+          <h1>{secondsToMinutes(seconds)}</h1>
+          <span>{isPlaying ? statusText : "break"}</span>
         </div>
         <div className={classes.action}>
           <FontAwesomeIcon onClick={reset} icon={faRotateLeft} />
@@ -112,7 +130,7 @@ const Pomodoro: FC = () => {
             onClick={isPlaying ? pauseTimer : startTimer}
             icon={isPlaying ? faPause : faPlay}
           />
-          <FontAwesomeIcon onClick={forwardStep} icon={faForwardStep} />
+          <FontAwesomeIcon onClick={nextStep} icon={faForwardStep} />
         </div>
         <p>
           {isPlaying

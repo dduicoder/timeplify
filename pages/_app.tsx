@@ -1,17 +1,16 @@
-import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import type { AppProps } from "next/app";
 import { ApolloProvider } from "@apollo/client";
 import client from "../graphql/client";
 
-import "@fortawesome/fontawesome-svg-core/styles.css";
-
+import Head from "next/head";
 import NotificationProvider from "../components/notification/NotificationProvider";
-import Up from "../components/UI/Up";
 import Header from "../components/layouts/Header";
 import Footer from "../components/layouts/Footer";
-import Head from "next/head";
+import Up from "../components/UI/Up";
 
+import "@fortawesome/fontawesome-svg-core/styles.css";
 import "../styles/calendar.scss";
 import "../styles/globals.scss";
 

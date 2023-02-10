@@ -1,6 +1,27 @@
 .pomodoro {
-  & > h1 {
+  .control {
     margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    h1 {
+      margin: 0;
+    }
+
+    div {
+      svg {
+        font-size: 1.25rem;
+      }
+
+      &:hover::after {
+        margin-left: 0.5rem;
+        content: "Pomodoro";
+        border: 1px solid rgba($color: black, $alpha: 0.1);
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+      }
+    }
   }
 
   .clock {

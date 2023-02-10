@@ -4,7 +4,6 @@ import { useNotification } from "../notification/NotificationProvider";
 import { CSSTransition } from "react-transition-group";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
-
 import Backdrop from "../UI/Backdrop";
 import Portal from "../UI/Portal";
 

@@ -1,7 +1,6 @@
 import { FC, useRef } from "react";
 
 import { CSSTransition } from "react-transition-group";
-
 import Portal from "./Portal";
 
 import classes from "./Backdrop.module.scss";
