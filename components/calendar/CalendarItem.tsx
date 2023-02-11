@@ -1,4 +1,4 @@
-import { useState, useEffect, FC } from "react";
+import { useState, useEffect, FC, SyntheticEvent } from "react";
 import { useNotification } from "../notification/NotificationProvider";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -51,28 +51,9 @@ const CalendarItem: FC<PropsType> = ({
 
   const notice = useNotification();
 
-  const { id, text, start, end, description } = calendar;
+  const { id, title, start, end, description } = calendar;
 
   const isTimeItem = start !== "";
-
-  const removeCalendar = () => {
-    setShow(false);
-
-    notice({
-      type: "SUCCESS",
-      message: `Calendar removed! (${text})`,
-    });
-
-    setTimeout(() => {
-      onDeleteCalendar(id);
-    }, 250);
-  };
-
-  const toggleDescription = () => {
-    setShowDescription((prevData: boolean) => {
-      return !prevData;
-    });
-  };
 
   if (isTimeItem) {
     useEffect(() => {
@@ -88,6 +69,27 @@ const CalendarItem: FC<PropsType> = ({
     });
   }
 
+  const removeCalendar = (event: SyntheticEvent) => {
+    event.stopPropagation();
+
+    notice({
+      type: "SUCCESS",
+      message: `Calendar removed! (${title})`,
+    });
+
+    setShow(false);
+
+    setTimeout(() => {
+      onDeleteCalendar(id);
+    }, 250);
+  };
+
+  const toggleDescription = () => {
+    setShowDescription((prevData: boolean) => {
+      return !prevData;
+    });
+  };
+
   let [progress, minutes] = getProgressAndMinutes(start, end, currentDate);
 
   if (!isToday) {
@@ -95,14 +97,11 @@ const CalendarItem: FC<PropsType> = ({
   }
 
   return (
-    <li
-      onClick={toggleDescription} // 삭제버튼 눌렀을 때도 카운트됨
-      className={`${classes.item} ${show ? "" : classes.close}`}
-    >
-      <div className={classes.wrapper}>
+    <li className={`${classes.item} ${show ? "" : classes.close}`}>
+      <div onClick={toggleDescription} className={classes.wrapper}>
         <div className={classes.info}>
           <span>
-            {text} {isTimeItem ? `(${minutes} minutes)` : ""}
+            {title} {isTimeItem ? `(${minutes} minutes)` : ""}
           </span>
           <span>{isTimeItem && `${start} ~ ${end}`}</span>
         </div>

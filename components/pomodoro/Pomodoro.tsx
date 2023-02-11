@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 import Head from "next/head";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,21 +12,27 @@ import {
 
 import classes from "./Pomodoro.module.scss";
 
-const gradients = [
-  ["#f7ce68", "#fbab7e"],
-  ["#21d4fd", "#b721ff"],
-  ["#8ec5fc", "#e0c3fc"],
-  ["#0093e9", "#80d0c7"],
-  ["#02343f", "#f0edcc"],
-  ["#ff6a88", "#ff99ac"],
-  ["#a9c9ff", "#ffbbec"],
-  ["#5efce8", "#736efe"],
-  ["#dce2f0", "#50586c"],
-];
-
 const POMODORO_SECONDS = 1500;
 const REST_SECONDS = 300;
 const LONG_REST_SECONDS = 900;
+
+const secondsToMinutes = (s: number) =>
+  (s - (s %= 60)) / 60 + (9 < s ? ":" : ":0") + s;
+
+const gradients = [
+  ["#f7ce68", "#fbab7e"],
+  ["#e2b0ff", "#9f44d3"],
+  ["#e0c3fc", "#8ec5fc"],
+  ["#80d0c7", "#0093e9"],
+  ["#90f7ec", "#32ccbc"],
+  ["#ff99ac", "#ff6a88"],
+  ["#a9c9ff", "#ffbbec"],
+  ["#5efce8", "#736efe"],
+  ["#dce2f0", "#50586c"],
+  ["#fdd819", "#e80505"],
+  ["#ee9ae5", "#5994f9"],
+  ["#ffd3a5", "#fd6585"],
+];
 
 const steps = [
   POMODORO_SECONDS,
@@ -46,8 +52,16 @@ const Pomodoro: FC = () => {
   const [index, setIndex] = useState<number>(0);
   const [seconds, setSeconds] = useState<number>(steps[index]);
 
-  const secondsToMinutes = (s: number) =>
-    (s - (s %= 60)) / 60 + (9 < s ? ":" : ":0") + s;
+  useEffect(() => {
+    const item = sessionStorage.getItem("index");
+
+    if (item) {
+      const itemIndex: number = JSON.parse(item);
+      setIndex(itemIndex);
+      setSeconds(steps[itemIndex]);
+      setIsPomodoro(itemIndex % 2 === 0);
+    }
+  }, []);
 
   const startTimer = () => {
     setIsPlaying(true);
@@ -58,6 +72,7 @@ const Pomodoro: FC = () => {
           const nextIndex = index < 7 ? index + 1 : 0;
 
           setIndex(nextIndex);
+          sessionStorage.setItem("index", JSON.stringify(nextIndex));
           setIsPlaying(false); //
           clearInterval(interId); // Do I delete these?
           setIsPomodoro(!isPomodoro);
@@ -87,6 +102,7 @@ const Pomodoro: FC = () => {
     pauseTimer();
     setSeconds(steps[nextIndex]);
     setIndex(nextIndex);
+    sessionStorage.setItem("index", JSON.stringify(nextIndex));
     setIsPomodoro(!isPomodoro);
   };
 
@@ -97,7 +113,7 @@ const Pomodoro: FC = () => {
 
   const statusText = isPomodoro ? "focus" : "chill";
 
-  const todaysGradient = gradients[new Date().getDate() % 9];
+  const todaysGradient = gradients[new Date().getDate() % 11];
 
   return (
     <>

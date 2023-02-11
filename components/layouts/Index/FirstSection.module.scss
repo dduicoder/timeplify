@@ -17,7 +17,7 @@
     text-align: center;
 
     h1 {
-      margin: 0;
+      // margin: 0;
       margin-bottom: 2rem;
       font-family: "Lato", sans-serif;
       font-size: 3.5rem;
@@ -41,19 +41,19 @@
       line-height: 130%;
     }
 
+    .action {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
     svg {
       display: block;
       cursor: pointer;
       margin: 0.5rem auto 0 auto;
       font-size: 1.5rem;
       animation: shake 1s ease-in-out infinite;
-    }
-
-    .action {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
     }
   }
 }

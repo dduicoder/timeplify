@@ -22,6 +22,18 @@ const CalendarModal = ({ show, close, onAddCalendar }: PropsType) => {
 
   const notice = useNotification();
 
+  useEffect(() => {
+    window.onkeydown = (event) => {
+      if (event.key === "Escape") {
+        close();
+      }
+    };
+
+    return () => {
+      window.onkeydown = null;
+    };
+  }, [close]);
+
   const submitHandler = (event: SyntheticEvent) => {
     event.preventDefault();
 
@@ -35,40 +47,46 @@ const CalendarModal = ({ show, close, onAddCalendar }: PropsType) => {
       datas.push(data[1] as string);
     }
 
-    const [text, start, end, description] = datas;
+    const [title, start, end, description] = datas;
 
-    if (text.trim().length === 0) {
-      notice({
-        type: "ERROR",
-        message: "Please write a text",
-      });
-
-      return;
-    }
+    let isError = false;
+    let errorText = "";
 
     if (description.trim().length === 0) {
-      notice({
-        type: "ERROR",
-        message: "Please write a description",
-      });
-
-      return;
+      isError = true;
+      errorText = "Please write a description";
     }
 
     if (showTime && start >= end) {
+      isError = true;
+      errorText = "Please check your calendar's time";
+    }
+
+    if (title.trim().length === 0) {
+      isError = true;
+      errorText = "Please write a title";
+    }
+
+    if (isError) {
       notice({
         type: "ERROR",
-        message: "Please check your calendar's time",
+        message: errorText,
       });
 
       return;
     }
 
-    onAddCalendar({ id: crypto.randomUUID(), text, start, end, description });
+    onAddCalendar({
+      id: crypto.randomUUID(),
+      title,
+      start,
+      end,
+      description,
+    });
 
     notice({
       type: "SUCCESS",
-      message: `Calendar made! (${text})`,
+      message: `Calendar made! (${title})`,
     });
 
     close();
@@ -79,18 +97,6 @@ const CalendarModal = ({ show, close, onAddCalendar }: PropsType) => {
 
     setShowTime(target.checked);
   };
-
-  useEffect(() => {
-    window.onkeydown = (event) => {
-      if (event.key === "Escape") {
-        close();
-      }
-    };
-
-    return () => {
-      window.onkeydown = null;
-    };
-  }, [close]);
 
   return (
     <>
@@ -113,8 +119,8 @@ const CalendarModal = ({ show, close, onAddCalendar }: PropsType) => {
               <FontAwesomeIcon icon={faXmark} onClick={close} />
             </div>
             <form onSubmit={submitHandler}>
-              <label htmlFor="calendar-text">Title</label>
-              <input type="text" name="text" id="calendar-text" autoFocus />
+              <label htmlFor="calendar-title">Title</label>
+              <input type="title" name="title" id="calendar-title" autoFocus />
               <label htmlFor="calendar-time">Time</label>
               <input
                 type="checkbox"

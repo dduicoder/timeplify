@@ -1,5 +1,4 @@
 .item {
-  cursor: pointer;
   animation: pop-in 0.25s ease-in-out forwards;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.025);
@@ -13,6 +12,7 @@
   gap: 5px;
 
   .wrapper {
+    cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -30,9 +30,8 @@
   }
 
   .description {
-    border-radius: 0.75rem;
     padding: 1rem;
-    width: 100%;
+    border-radius: 0.75rem;
     background-color: rgba($color: black, $alpha: 0.025);
   }
 
@@ -44,10 +43,10 @@
     background-color: var(--color-light);
     transition: width 1s ease-in-out;
   }
-}
 
-.close {
-  animation: pop-out 0.25s ease-in-out forwards;
+  &.close {
+    animation: pop-out 0.25s ease-in-out forwards;
+  }
 }
 
 @keyframes pop-in {

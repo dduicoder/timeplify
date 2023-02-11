@@ -16,6 +16,7 @@
       font-size: 1.25rem;
       margin-right: 0.5rem;
     }
+
     span {
       letter-spacing: 0.9;
       font-weight: bold;
@@ -25,17 +26,31 @@
 
   .nav {
     display: flex;
-    gap: 1rem;
     align-items: center;
+    gap: 1rem;
 
     div {
       transition: all 0.25s ease-in-out;
       padding: 5px 0;
       border-bottom: 1px solid transparent;
-      &:hover,
-      &:active,
-      &.active {
-        border-color: var(--color-light) !important;
+      position: relative;
+
+      &::after {
+        content: "";
+        width: 100%;
+        height: 2px;
+        background-color: var(--color-light);
+        position: absolute;
+        left: 0;
+        top: 100%;
+        transform: scaleX(0);
+        transform-origin: 0%;
+        transition: transform 0.25s ease-in-out;
+      }
+
+      &:hover::after,
+      &.active::after {
+        transform: scaleX(1);
       }
     }
   }

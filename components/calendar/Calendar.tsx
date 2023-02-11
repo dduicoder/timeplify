@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
-import { GET_DATE, ADD_CALENDAR, REMOVE_CALENDAR } from "../../lib/query";
+import { GET_DATE, ADD_CALENDAR, REMOVE_CALENDAR } from "../../graphql/querys";
 
 import { Calendar as ReactCalendar } from "react-calendar";
 import CalendarItem from "./CalendarItem";
@@ -40,8 +40,6 @@ const Calendar: FC = () => {
     ],
   });
 
-  const calendars = queryData?.getDate.calendars;
-
   const newCalendar = (data: CalendarType) => {
     addCalendar({
       variables: { date: dateText, ...data },
@@ -60,22 +58,23 @@ const Calendar: FC = () => {
     refetch({ date: newDateText });
   };
 
-  const today = new Date();
+  const calendars: CalendarType[] = queryData?.getDate.calendars;
 
   const formatter = new Intl.RelativeTimeFormat("en-US", {
     numeric: "auto",
     style: "short",
   });
 
-  const daysPassed = Math.ceil(
-    (date.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
-  );
+  const today = new Date();
 
   const isToday =
     date.toISOString().slice(0, 10).split("-").join("") ===
     today.toISOString().slice(0, 10).split("-").join("");
 
-  const daysPassedText = formatter.format(daysPassed, "day");
+  const dayFormatText = formatter.format(
+    Math.ceil((date.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)),
+    "day"
+  );
 
   return (
     <section>
@@ -93,22 +92,21 @@ const Calendar: FC = () => {
         <div style={{ marginTop: "2rem" }} className="loading-spinner" />
       ) : (
         <>
-          <h1>{daysPassedText}</h1>
-          {calendars?.length === 0 && (
-            <div className={classes.error}>
-              <p>- No Calendars -</p>
-            </div>
+          <h1>{dayFormatText}</h1>
+          {calendars.length === 0 ? (
+            <p className={classes.error}>- No Calendars -</p>
+          ) : (
+            <ul className={classes.list}>
+              {calendars.map((item: CalendarType) => (
+                <CalendarItem
+                  key={item.id}
+                  isToday={isToday}
+                  calendar={item}
+                  onDeleteCalendar={deleteCalendar}
+                />
+              ))}
+            </ul>
           )}
-          <ul className={classes.list}>
-            {calendars?.map((item: CalendarType) => (
-              <CalendarItem
-                key={item.id}
-                isToday={isToday}
-                calendar={item}
-                onDeleteCalendar={deleteCalendar}
-              />
-            ))}
-          </ul>
         </>
       )}
       <div className={classes.action}>

@@ -3,7 +3,7 @@ export {};
 declare global {
   type CalendarType = {
     id: string;
-    text: string;
+    title: string;
     start: string;
     end: string;
     description: string;
@@ -11,7 +11,7 @@ declare global {
 
   type NoticeType = {
     id: string;
-    type: string;
+    type: "ERROR" | "SUCCESS";
     message: string;
   };
 }

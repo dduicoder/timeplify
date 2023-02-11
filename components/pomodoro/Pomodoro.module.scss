@@ -30,7 +30,7 @@
     transition: all 1s;
     margin: auto;
     margin-bottom: 2rem;
-    width: 60%;
+    width: 65%;
     aspect-ratio: 1 / 1;
     outline: 1rem solid rgba($color: white, $alpha: 0.25);
     outline-offset: -1rem;
@@ -45,6 +45,10 @@
     h1 {
       font-size: 3rem;
       margin: 0;
+
+      @media (max-width: 600px) {
+        font-size: 2.5rem;
+      }
     }
 
     span {

@@ -5,7 +5,7 @@ export const GET_DATE = gql`
     getDate(date: $date) {
       calendars {
         id
-        text
+        title
         start
         end
         description
@@ -18,7 +18,7 @@ export const ADD_CALENDAR = gql`
   mutation addCalendar(
     $date: String!
     $id: ID!
-    $text: String!
+    $title: String!
     $start: String!
     $end: String!
     $description: String!
@@ -26,12 +26,12 @@ export const ADD_CALENDAR = gql`
     addCalendar(
       date: $date
       id: $id
-      text: $text
+      title: $title
       start: $start
       end: $end
       description: $description
     ) {
-      text
+      title
     }
   }
 `;

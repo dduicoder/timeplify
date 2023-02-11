@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, FC } from "react";
 import { useRouter } from "next/router";
 import type { AppProps } from "next/app";
 import { ApolloProvider } from "@apollo/client";
@@ -14,7 +14,7 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import "../styles/calendar.scss";
 import "../styles/globals.scss";
 
-const App = ({ Component, pageProps }: AppProps) => {
+const App: FC<AppProps> = ({ Component, pageProps }: AppProps) => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const router = useRouter();
@@ -34,8 +34,6 @@ const App = ({ Component, pageProps }: AppProps) => {
     };
   });
 
-  const isIndex = router.pathname === "/";
-
   return (
     <>
       <Head>
@@ -47,7 +45,7 @@ const App = ({ Component, pageProps }: AppProps) => {
             <Up />
           </div>
           {loading && <div className="loading-bar" />}
-          {isIndex ? (
+          {router.pathname === "/" ? (
             <main className="index">
               <Header />
               <Component />

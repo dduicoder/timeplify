@@ -4,9 +4,9 @@
   position: fixed;
   top: 10vh;
   left: 50%;
-  transform: translateX(-50%);
-  width: min(100%, 45rem);
   height: 80vh;
+  width: min(100%, 45rem);
+  transform: translateX(-50%);
   z-index: 10;
   overflow-y: scroll;
   background-color: white;
@@ -50,14 +50,14 @@
   textarea {
     margin: 1rem 0;
   }
-}
 
-.open {
-  animation: pop-in 0.25s ease-in-out forwards;
-}
+  &.open {
+    animation: pop-in 0.25s ease-in-out forwards;
+  }
 
-.close {
-  animation: pop-out 0.25s ease-in-out forwards;
+  &.close {
+    animation: pop-out 0.25s ease-in-out forwards;
+  }
 }
 
 @keyframes pop-in {

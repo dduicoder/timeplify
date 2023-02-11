@@ -22,6 +22,15 @@
     align-items: center;
     gap: 1.5rem;
 
+    @media (max-width: 866px) {
+      flex-direction: column;
+
+      .content__first,
+      .content__second {
+        flex: unset;
+      }
+    }
+
     .content__first {
       flex: 2;
 
@@ -83,18 +92,5 @@
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@media (max-width: 866px) {
-  .second {
-    // padding-top: 2rem;
-    .content {
-      flex-direction: column;
-      .content__first,
-      .content__second {
-        flex: unset;
-      }
-    }
   }
 }

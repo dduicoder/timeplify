@@ -23,6 +23,10 @@
   grid-gap: 1rem;
   grid-template-columns: 1fr 1fr 1fr 1fr;
 
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+
   div {
     font-size: 0.9rem;
     color: rgb(200, 200, 200);
@@ -35,11 +39,5 @@
     font-size: 1rem;
     color: white;
     margin-bottom: 0.5rem;
-  }
-}
-
-@media (max-width: 600px) {
-  .control {
-    grid-template-columns: 1fr;
   }
 }
