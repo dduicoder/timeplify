@@ -68,7 +68,7 @@ const NotificationProvider: FC<{
 export const useNotification = () => {
   const dispatch = useContext(NotificationContext);
 
-  return (props: { type: string; message: string }) => {
+  return (props: { type: "SUCCESS" | "ERROR"; message: string }) => {
     dispatch({
       type: "ADD_NOTIFICATION",
       payload: {

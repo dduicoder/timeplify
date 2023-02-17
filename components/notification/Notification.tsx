@@ -35,7 +35,7 @@ const Notification: FC<PropsType> = ({ note, deleteNotification }) => {
     setTimeout(() => {
       deleteNotification(id);
     }, 250);
-  }, [intervalID, deleteNotification, id, setExit]);
+  }, [intervalID, id, deleteNotification, setExit]);
 
   useEffect(() => {
     if (width >= 100) {

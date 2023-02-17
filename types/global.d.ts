@@ -11,7 +11,7 @@ declare global {
 
   type NoticeType = {
     id: string;
-    type: "ERROR" | "SUCCESS";
+    type: "SUCCESS" | "ERROR";
     message: string;
   };
 }

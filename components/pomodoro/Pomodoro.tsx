@@ -1,6 +1,7 @@
 import { FC, useEffect, useState } from "react";
 
 import Head from "next/head";
+import Todo from "./Todo";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleInfo,
@@ -115,12 +116,12 @@ const Pomodoro: FC = () => {
 
   const todaysGradient = gradients[new Date().getDate() % 11];
 
+  const minutes = secondsToMinutes(seconds);
+
   return (
     <>
       <Head>
-        <title>{`${secondsToMinutes(
-          seconds
-        )} ${statusText} - Timeplifey`}</title>
+        <title>{`${minutes} ${statusText} - Timeplifey`}</title>
       </Head>
       <section className={classes.pomodoro}>
         <div className={classes.control}>
@@ -137,7 +138,7 @@ const Pomodoro: FC = () => {
             backgroundPositionX: `${progress}%`,
           }}
         >
-          <h1>{secondsToMinutes(seconds)}</h1>
+          <h1>{minutes}</h1>
           <span>{isPlaying ? statusText : "break"}</span>
         </div>
         <div className={classes.action}>
@@ -149,13 +150,14 @@ const Pomodoro: FC = () => {
           <FontAwesomeIcon onClick={nextStep} icon={faForwardStep} />
         </div>
         <p>
-          {isPlaying
-            ? isPomodoro
+          {isPomodoro
+            ? isPlaying
               ? "Time to focus."
-              : "Good job!"
-            : "Take your time."}
+              : "Take your time."
+            : "Great job!"}
         </p>
       </section>
+      <Todo />
     </>
   );
 };

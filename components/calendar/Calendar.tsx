@@ -77,44 +77,48 @@ const Calendar: FC = () => {
   );
 
   return (
-    <section>
+    <>
       <CalendarModal
         show={showModal}
         close={() => setShowModal(false)}
         onAddCalendar={newCalendar}
       />
-      <ReactCalendar
-        onChange={calendarChangeHandler}
-        value={date}
-        minDetail="year"
-      />
-      {loading ? (
-        <div style={{ marginTop: "2rem" }} className="loading-spinner" />
-      ) : (
-        <>
-          <h1>{dayFormatText}</h1>
-          {calendars.length === 0 ? (
-            <p className={classes.error}>- No Calendars -</p>
-          ) : (
-            <ul className={classes.list}>
-              {calendars.map((item: CalendarType) => (
-                <CalendarItem
-                  key={item.id}
-                  isToday={isToday}
-                  calendar={item}
-                  onDeleteCalendar={deleteCalendar}
-                />
-              ))}
-            </ul>
-          )}
-        </>
-      )}
-      <div className={classes.action}>
-        <button className="btn-flat" onClick={() => setShowModal(true)}>
-          New Calendar
-        </button>
-      </div>
-    </section>
+      <section>
+        <ReactCalendar
+          onChange={calendarChangeHandler}
+          value={date}
+          minDetail="year"
+        />
+      </section>
+      <section>
+        {loading ? (
+          <div style={{ marginTop: "2rem" }} className="loading-spinner" />
+        ) : (
+          <>
+            <h1>{dayFormatText}</h1>
+            {calendars.length === 0 ? (
+              <p className={classes.error}>- No Calendars -</p>
+            ) : (
+              <ul className={classes.list}>
+                {calendars.map((item: CalendarType) => (
+                  <CalendarItem
+                    key={item.id}
+                    isToday={isToday}
+                    calendar={item}
+                    onDeleteCalendar={deleteCalendar}
+                  />
+                ))}
+              </ul>
+            )}
+          </>
+        )}
+        <div className={classes.action}>
+          <button className="btn-flat" onClick={() => setShowModal(true)}>
+            New Calendar
+          </button>
+        </div>
+      </section>
+    </>
   );
 };
 

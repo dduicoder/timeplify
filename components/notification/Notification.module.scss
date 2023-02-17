@@ -8,26 +8,26 @@
   animation: pop-in 0.25s ease-in-out forwards;
   position: relative;
   overflow: hidden;
-}
 
-.bar {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 0.25rem;
-  transition: width 150ms linear;
-}
+  .bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 0.25rem;
+    transition: width 150ms linear;
 
-.success {
-  background-color: var(--main-color);
-}
+    &.success {
+      background-color: var(--main-color);
+    }
 
-.error {
-  background-color: rgb(240, 80, 80);
-}
+    &.error {
+      background-color: rgb(240, 80, 80);
+    }
+  }
 
-.close {
-  animation: pop-out 0.25s ease-in-out forwards;
+  &.close {
+    animation: pop-out 0.25s ease-in-out forwards;
+  }
 }
 
 @keyframes pop-in {

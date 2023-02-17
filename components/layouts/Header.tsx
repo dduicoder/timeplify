@@ -21,12 +21,12 @@ const Header: FC = () => {
         <span>Timeplifey</span>
       </Link>
       <nav className={classes.nav}>
-        <div className={anchorClassName("pomodoro")}>
-          <Link href="/pomodoro">Pomodoro</Link>
-        </div>
-        <div className={anchorClassName("calendar")}>
-          <Link href="/calendar">Calendar</Link>
-        </div>
+        <Link legacyBehavior href="/pomodoro">
+          <a className={anchorClassName("pomodoro")}>Pomodoro</a>
+        </Link>
+        <Link legacyBehavior href="/calendar">
+          <a className={anchorClassName("calendar")}>Calendar</a>
+        </Link>
       </nav>
     </header>
   );
