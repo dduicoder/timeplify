@@ -13,29 +13,26 @@ type Todo = {
 
 const Todo = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
+  const [inputText, setInputText] = useState<string>("");
 
   const notice = useNotification();
 
   const addTodoHandler = (event: SyntheticEvent) => {
     event.preventDefault();
 
-    const target = event.target as HTMLFormElement;
-
-    const text: string = Object.fromEntries(
-      new FormData(target)
-    ).text.toString();
-
-    if (text.trim().length === 0) {
+    if (inputText.trim().length === 0) {
       notice({ type: "ERROR", message: "Please write a text" });
 
       return;
     }
 
-    notice({ type: "SUCCESS", message: `New Todo!(${text})` });
+    notice({ type: "SUCCESS", message: `New Todo!(${inputText})` });
 
     setTodos((prevTodos) => {
-      return prevTodos.concat({ id: crypto.randomUUID(), text });
+      return prevTodos.concat({ id: crypto.randomUUID(), text: inputText });
     });
+
+    setInputText("");
   };
 
   const removeTodoHandler = (id: string) => {
@@ -48,7 +45,13 @@ const Todo = () => {
     <section>
       <h1>Todo</h1>
       <form className={classes.form} onSubmit={addTodoHandler}>
-        <input type="text" name="text" />
+        <input
+          type="text"
+          value={inputText}
+          onChange={(e) => {
+            setInputText(e.target.value);
+          }}
+        />
         <button className="btn-flat">Add</button>
       </form>
       <ul className={classes.list}>

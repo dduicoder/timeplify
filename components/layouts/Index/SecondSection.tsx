@@ -19,18 +19,18 @@ const SecondSection: FC<PropsType> = ({ refFunc }) => {
   const infoList = [
     {
       icon: faBarsProgress,
-      text: "Check your daily schedule",
-      subText: "Manage your daily schedule",
+      text: "Your own time manager, Timeplifey",
+      subText: "Manage your time with Timeplifey",
     },
     {
       icon: faClock,
-      text: "Use your time wisely with Timeplifey",
-      subText: "Manage your daily schedule",
+      text: "Pomodoro: focus and flow",
+      subText: "Increase your work efficiency with Pomodoro",
     },
     {
       icon: faCalendarCheck,
-      text: "Calendar everyday!",
-      subText: "Manage your daily schedule",
+      text: "Everyday calendar",
+      subText: "Manage your daily schedule with Timeplifey Calendar",
     },
   ];
 

@@ -95,7 +95,7 @@ const Calendar: FC = () => {
           <div style={{ marginTop: "2rem" }} className="loading-spinner" />
         ) : (
           <>
-            <h1>{dayFormatText}</h1>
+            <h1>{`${dayFormatText} (${date.toLocaleDateString()})`}</h1>
             {calendars.length === 0 ? (
               <p className={classes.error}>- No Calendars -</p>
             ) : (

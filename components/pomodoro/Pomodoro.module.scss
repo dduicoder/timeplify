@@ -30,7 +30,7 @@
     transition: all 1s;
     margin: auto;
     margin-bottom: 2rem;
-    width: 65%;
+    width: min(25rem, 75%);
     aspect-ratio: 1 / 1;
     outline: 1rem solid rgba($color: white, $alpha: 0.25);
     outline-offset: -1rem;
@@ -43,15 +43,12 @@
     align-items: center;
 
     h1 {
-      font-size: 3rem;
+      font-size: min(7vw, 3rem);
       margin: 0;
-
-      @media (max-width: 600px) {
-        font-size: 2.5rem;
-      }
     }
 
     span {
+      font-size: min(4vw, 1rem);
       text-transform: uppercase;
       font-weight: bold;
     }

@@ -33,7 +33,6 @@
       position: relative;
       transition: all 0.25s ease-in-out;
       padding: 5px 0;
-      border-bottom: 1px solid transparent;
 
       &::after {
         content: "";
@@ -41,6 +40,7 @@
         height: 2px;
         background-color: var(--color-light);
         position: absolute;
+        border-radius: 2px;
         left: 0;
         top: 100%;
         transform: scaleX(0);
