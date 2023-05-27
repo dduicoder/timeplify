@@ -12,6 +12,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import classes from "./Pomodoro.module.scss";
+import PomodoroModal from "./PomodoroModal";
 
 const POMODORO_SECONDS = 1500;
 const REST_SECONDS = 300;
@@ -49,6 +50,7 @@ const steps = [
 const Pomodoro: FC = () => {
   const [isPomodoro, setIsPomodoro] = useState<boolean>(true);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
   const [intervalID, setIntervalID] = useState<any>();
   const [index, setIndex] = useState<number>(0);
   const [seconds, setSeconds] = useState<number>(steps[index]);
@@ -123,11 +125,15 @@ const Pomodoro: FC = () => {
       <Head>
         <title>{`${minutes} ${statusText} - Timeplifey`}</title>
       </Head>
+      <PomodoroModal show={showModal} close={() => setShowModal(false)} />
       <section className={classes.pomodoro}>
         <div className={classes.control}>
           <h1>{`Pomodoro(step ${index + 1})`}</h1>
           <div>
-            <FontAwesomeIcon icon={faCircleInfo} />
+            <FontAwesomeIcon
+              icon={faCircleInfo}
+              onClick={() => setShowModal(true)}
+            />
           </div>
         </div>
         <div
