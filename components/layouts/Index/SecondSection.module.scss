@@ -1,3 +1,10 @@
+@mixin ladder-pop($delay) {
+  opacity: 0;
+  translate: 0 5%;
+  transition-property: opacity, translate;
+  transition: 0.5s ease-in-out $delay;
+}
+
 .second {
   transform: translateZ(0);
   border-top-left-radius: 2rem;
@@ -16,18 +23,17 @@
   align-items: center;
 
   .content {
-    opacity: 0;
     width: min(100%, 70rem);
     display: flex;
     align-items: center;
     gap: 1.5rem;
 
-    @media (max-width: 866px) {
-      flex-direction: column;
-
-      .content__first,
+    &.show {
+      .content__first h1,
+      .content__first .content__first-list,
       .content__second {
-        flex: unset;
+        opacity: 1;
+        translate: 0 0;
       }
     }
 
@@ -35,11 +41,13 @@
       flex: 2;
 
       h1 {
+        @include ladder-pop(0.5s);
         font-size: 3rem;
         margin-top: 0;
       }
 
       .content__first-list {
+        @include ladder-pop(1s);
         display: flex;
         flex-direction: column;
         gap: 1.5rem;
@@ -55,16 +63,16 @@
           font-size: 1.1rem;
           transition: background-color 0.25s ease-in-out;
 
+          svg {
+            margin-right: 0.5rem;
+          }
+
           span:first-child {
             font-size: 1.3rem;
           }
 
           &:hover {
             background-color: rgba($color: white, $alpha: 0.1);
-          }
-
-          svg {
-            margin-right: 0.5rem;
           }
         }
 
@@ -76,9 +84,20 @@
     }
 
     .content__second {
+      @include ladder-pop(1.5s);
       flex: 1;
+
       &.pop {
         animation: pop-up 0.5s ease-in-out;
+      }
+    }
+
+    @media (max-width: 866px) {
+      flex-direction: column;
+
+      .content__first,
+      .content__second {
+        flex: unset;
       }
     }
   }
@@ -87,7 +106,7 @@
 @keyframes pop-up {
   from {
     opacity: 0;
-    transform: translateY(5%);
+    transform: translateY(7.5%);
   }
   to {
     opacity: 1;

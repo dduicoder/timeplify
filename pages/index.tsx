@@ -1,7 +1,8 @@
 import { NextPage } from "next";
 import Head from "next/head";
 
-import Index from "../components/layouts/Index/Index";
+import FirstSection from "../components/layouts/Index/FirstSection";
+import SecondSection from "../components/layouts/Index/SecondSection";
 
 const Home: NextPage = () => {
   return (
@@ -9,7 +10,8 @@ const Home: NextPage = () => {
       <Head>
         <title>Timeplifey</title>
       </Head>
-      <Index />
+      <FirstSection />
+      <SecondSection />
     </>
   );
 };

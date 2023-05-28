@@ -17,7 +17,7 @@
     text-align: center;
 
     h1 {
-      // margin: 0;
+      margin: 0;
       margin-bottom: 2rem;
       font-family: "Lato", sans-serif;
       font-size: 3.5rem;
@@ -71,13 +71,13 @@
 
 @keyframes shake {
   0% {
-    transform: translateY(0.5rem);
+    translate: 0 0.5rem;
   }
   50% {
-    transform: translateY(0);
+    translate: 0 0;
   }
   100% {
-    transform: translateY(0.5rem);
+    translate: 0 0.5rem;
   }
 }
 
