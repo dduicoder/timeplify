@@ -1,7 +1,6 @@
 import { FC, useEffect, useState } from "react";
 
 import Head from "next/head";
-import Todo from "./Todo";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleInfo,
@@ -10,9 +9,10 @@ import {
   faPause,
   faForwardStep,
 } from "@fortawesome/free-solid-svg-icons";
+import Todo from "./Todo";
+import PomodoroModal from "./PomodoroModal";
 
 import classes from "./Pomodoro.module.scss";
-import PomodoroModal from "./PomodoroModal";
 
 const POMODORO_SECONDS = 1500;
 const REST_SECONDS = 300;

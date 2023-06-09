@@ -44,7 +44,7 @@ const PomodoroModal = ({ show, close }: PropsType) => {
           }}
         >
           <div ref={ref} className={classes.modal}>
-            <header className={classes.control}>
+            <header>
               <h1>Pomodoro Technique</h1>
               <FontAwesomeIcon icon={faXmark} onClick={close} />
             </header>

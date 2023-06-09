@@ -1,8 +1,7 @@
 import { SyntheticEvent, useState } from "react";
 import { useNotification } from "../notification/NotificationProvider";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import TodoItem from "./TodoItem";
 
 import classes from "./Todo.module.scss";
 
@@ -55,14 +54,14 @@ const Todo = () => {
         <button className="btn-flat">Add</button>
       </form>
       <ul className={classes.list}>
+        {todos.length === 0 && <p>Nothing To Do...</p>}
         {todos.map((todo) => (
-          <li key={todo.id} className={classes.item}>
-            {todo.text}
-            <FontAwesomeIcon
-              icon={faXmark}
-              onClick={() => removeTodoHandler(todo.id)}
-            />
-          </li>
+          <TodoItem
+            key={todo.id}
+            id={todo.id}
+            text={todo.text}
+            onRemoveTodo={removeTodoHandler}
+          />
         ))}
       </ul>
     </section>
