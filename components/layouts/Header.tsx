@@ -10,7 +10,7 @@ import classes from "./Header.module.scss";
 const Header: FC = () => {
   const router = useRouter();
 
-  const anchorClassName = (link: string) => {
+  const getAnchorClassName = (link: string) => {
     return router.pathname.startsWith(`/${link}`) ? classes.active : "";
   };
 
@@ -22,10 +22,10 @@ const Header: FC = () => {
       </Link>
       <nav className={classes.nav}>
         <Link legacyBehavior href="/pomodoro">
-          <a className={anchorClassName("pomodoro")}>Pomodoro</a>
+          <a className={getAnchorClassName("pomodoro")}>Pomodoro</a>
         </Link>
         <Link legacyBehavior href="/calendar">
-          <a className={anchorClassName("calendar")}>Calendar</a>
+          <a className={getAnchorClassName("calendar")}>Calendar</a>
         </Link>
       </nav>
     </header>

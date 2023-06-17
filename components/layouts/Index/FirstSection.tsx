@@ -7,7 +7,7 @@ import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import classes from "./FirstSection.module.scss";
 
 const FirstSection: FC = () => {
-  const onScroll = () => {
+  const scrollHandler = () => {
     const secondSection = document.querySelectorAll("#__next section")[1];
 
     if (secondSection) {
@@ -34,7 +34,7 @@ const FirstSection: FC = () => {
           </Link>
         </div>
         <span>Learn about Timeplifey</span>
-        <FontAwesomeIcon icon={faChevronDown} onClick={onScroll} />
+        <FontAwesomeIcon icon={faChevronDown} onClick={scrollHandler} />
       </div>
     </section>
   );

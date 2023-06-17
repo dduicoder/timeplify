@@ -14,7 +14,7 @@ type PropsType = {
 const TodoItem: FC<PropsType> = ({ id, text, onRemoveTodo }) => {
   const [exit, setExit] = useState<boolean>(false);
 
-  const itemRemoveHandler = () => {
+  const removeTodoHandler = () => {
     setExit(true);
 
     setTimeout(() => onRemoveTodo(id), 250);
@@ -23,7 +23,7 @@ const TodoItem: FC<PropsType> = ({ id, text, onRemoveTodo }) => {
   return (
     <li key={id} className={`${classes.item} ${exit ? classes.delete : ""}`}>
       {text}
-      <FontAwesomeIcon icon={faCheck} onClick={itemRemoveHandler} />
+      <FontAwesomeIcon icon={faCheck} onClick={removeTodoHandler} />
     </li>
   );
 };

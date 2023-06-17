@@ -18,7 +18,7 @@ const POMODORO_SECONDS = 1500;
 const REST_SECONDS = 300;
 const LONG_REST_SECONDS = 900;
 
-const secondsToMinutes = (s: number) =>
+const getSecondsToMinutes = (s: number) =>
   (s - (s %= 60)) / 60 + (9 < s ? ":" : ":0") + s;
 
 const gradients = [
@@ -118,7 +118,7 @@ const Pomodoro: FC = () => {
 
   const todaysGradient = gradients[new Date().getDate() % 11];
 
-  const minutes = secondsToMinutes(seconds);
+  const minutes = getSecondsToMinutes(seconds);
 
   return (
     <>

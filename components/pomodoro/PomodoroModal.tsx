@@ -52,7 +52,7 @@ const PomodoroModal = ({ show, close }: PropsType) => {
               <h3>What is the Pomodoro Technique?</h3>
               <p>
                 The Pomodoro Technique is a well-known time management method.
-                Here's how it works.
+                Here&apos;s how it works.
               </p>
               <ol>
                 <li>
@@ -62,7 +62,7 @@ const PomodoroModal = ({ show, close }: PropsType) => {
                 <li>
                   Work Intensely: Concentrate on your task with dedication.
                   Avoid multitasking and work efficiently for 25 minutes. Also,
-                  don't forget that there's an upcoming break.
+                  don&apos;t forget that there&apos;s an upcoming break.
                 </li>
                 <li>
                   Take a Short Break: After the 25-minute Pomodoro, take a short
@@ -121,8 +121,8 @@ const PomodoroModal = ({ show, close }: PropsType) => {
                 </li>
                 <li>
                   Procrastinators: Those who struggle with procrastination can
-                  benefit from Pomodoro's break intervals and time limits, which
-                  helps breaking task to a manageable form.
+                  benefit from Pomodoro&apos;s break intervals and time limits,
+                  which helps breaking task to a manageable form.
                 </li>
                 <li>
                   Anyone Seeking Focus: Pomodoro can be helpful for anyone

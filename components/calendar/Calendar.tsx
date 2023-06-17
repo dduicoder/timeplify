@@ -40,13 +40,13 @@ const Calendar: FC = () => {
     ],
   });
 
-  const newCalendar = (data: CalendarType) => {
+  const addCalendarHandler = (data: CalendarType) => {
     addCalendar({
       variables: { date: dateText, ...data },
     });
   };
 
-  const deleteCalendar = (id: string) => {
+  const removeCalendarHandler = (id: string) => {
     removeCalendar({ variables: { date: dateText, id } });
   };
 
@@ -81,7 +81,7 @@ const Calendar: FC = () => {
       <CalendarModal
         show={showModal}
         close={() => setShowModal(false)}
-        onAddCalendar={newCalendar}
+        onAddCalendar={addCalendarHandler}
       />
       <section>
         <ReactCalendar
@@ -96,20 +96,19 @@ const Calendar: FC = () => {
         ) : (
           <>
             <h1>{`${dayFormatText} (${date.toLocaleDateString()})`}</h1>
-            {calendars.length === 0 ? (
+            {calendars.length === 0 && (
               <p className={classes.error}>- No Calendars -</p>
-            ) : (
-              <ul className={classes.list}>
-                {calendars.map((item: CalendarType) => (
-                  <CalendarItem
-                    key={item.id}
-                    isToday={isToday}
-                    calendar={item}
-                    onDeleteCalendar={deleteCalendar}
-                  />
-                ))}
-              </ul>
             )}
+            <ul className={classes.list}>
+              {calendars.map((item: CalendarType) => (
+                <CalendarItem
+                  key={item.id}
+                  isToday={isToday}
+                  calendar={item}
+                  onDeleteCalendar={removeCalendarHandler}
+                />
+              ))}
+            </ul>
           </>
         )}
         <div className={classes.action}>

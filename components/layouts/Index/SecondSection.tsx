@@ -49,24 +49,27 @@ const SecondSection: FC = () => {
     }, 500);
   };
 
-  const onIntersect: IntersectionObserverCallback = useCallback((event) => {
-    if (event[0].isIntersecting) {
-      event[0].target.classList.add(classes.show);
-    }
-  }, []);
+  const intersectHandler: IntersectionObserverCallback = useCallback(
+    (event) => {
+      if (event[0].isIntersecting) {
+        event[0].target.classList.add(classes.show);
+      }
+    },
+    []
+  );
 
   useEffect(() => {
     if (!ref) return;
 
     const observer: IntersectionObserver = new IntersectionObserver(
-      onIntersect
+      intersectHandler
     );
     observer.observe(ref);
 
     return () => {
       observer.unobserve(ref);
     };
-  }, [onIntersect, ref]);
+  }, [intersectHandler, ref]);
 
   // useEffect(() => {
   //   const interval = setInterval(() => {

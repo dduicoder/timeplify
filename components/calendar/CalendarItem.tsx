@@ -55,8 +55,8 @@ const CalendarItem: FC<PropsType> = ({
 
   const isTimeItem = start !== "";
 
-  if (isTimeItem) {
-    useEffect(() => {
+  useEffect(() => {
+    if (isTimeItem) {
       const interval = setInterval(() => {
         const newDate = new Date().toTimeString().split(" ")[0].split(":");
         if (getTime(newDate, newDate[2]) > getTime(end.split(":"), "0")) {
@@ -66,10 +66,10 @@ const CalendarItem: FC<PropsType> = ({
       }, 60000);
 
       return () => clearInterval(interval);
-    });
-  }
+    }
+  });
 
-  const removeCalendar = (event: SyntheticEvent) => {
+  const removeCalendarHandler = (event: SyntheticEvent) => {
     event.stopPropagation();
 
     notice({
@@ -84,7 +84,7 @@ const CalendarItem: FC<PropsType> = ({
     }, 250);
   };
 
-  const toggleDescription = () => {
+  const toggleDescriptionHandler = () => {
     setShowDescription((prevData: boolean) => {
       return !prevData;
     });
@@ -98,7 +98,7 @@ const CalendarItem: FC<PropsType> = ({
 
   return (
     <li className={`${classes.item} ${show ? "" : classes.close}`}>
-      <div onClick={toggleDescription} className={classes.wrapper}>
+      <div onClick={toggleDescriptionHandler} className={classes.wrapper}>
         <div className={classes.info}>
           <span>
             {title} {isTimeItem ? `(${minutes} minutes)` : ""}
@@ -106,7 +106,7 @@ const CalendarItem: FC<PropsType> = ({
           <span>{isTimeItem && `${start} ~ ${end}`}</span>
         </div>
         <div className={classes.action}>
-          <button onClick={removeCalendar} className="btn-flat">
+          <button onClick={removeCalendarHandler} className="btn-flat">
             <FontAwesomeIcon icon={faX} />
           </button>
           {/* <button className="btn-flat">
