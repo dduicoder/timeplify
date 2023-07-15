@@ -2,15 +2,9 @@
 const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
-  experimental: { appDir: true },
-  webpack(config) {
-    config.experiments = { ...config.experiments, topLevelAwait: true };
-    return config;
-  },
   async headers() {
     return [
       {
-        // matching all API routes
         source: "/api/:path*",
         headers: [
           { key: "Access-Control-Allow-Credentials", value: "true" },
