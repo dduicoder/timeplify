@@ -3,7 +3,7 @@
 .first {
   transform-style: preserve-3d;
   transform: translateZ(-1rem) scale(2);
-  // will-change: auto;
+  will-change: auto;
   animation: pop-up 0.5s ease-in-out;
   min-height: calc(100vh - 4rem);
   display: flex;
@@ -28,6 +28,10 @@
       -webkit-text-fill-color: transparent;
       animation: gradient 5s ease-in-out infinite;
 
+      @media (max-width: 600px) {
+        font-size: 3rem;
+      }
+
       &::selection {
         -webkit-text-fill-color: white;
         color: white;
@@ -36,9 +40,14 @@
     }
 
     p {
+      animation-delay: 1s;
       font-size: 1.1rem;
       margin-bottom: 2rem;
       line-height: 130%;
+
+      @media (max-width: 600px) {
+        font-size: 1rem;
+      }
     }
 
     .action {
