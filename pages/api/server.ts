@@ -1,49 +1,9 @@
 import { ApolloServer } from "@apollo/server";
 import { startServerAndCreateNextHandler } from "@as-integrations/next";
+import { MongoClient } from "mongodb";
 
-type Calendar = {
-  id: string;
-  title: string;
-  start: string;
-  end: string;
-  description: string;
-};
-
-type DateItem = {
-  date: string;
-  calendars: Calendar[];
-};
-
-const getAllDaysWithinSixMonths = () => {
-  const datesList: string[] = [];
-  let currentDate = new Date();
-
-  currentDate.setMonth(currentDate.getMonth() - 1);
-
-  for (let i = 0; i < 3; i++) {
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth();
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-    for (let day = 1; day <= daysInMonth; day++) {
-      const date = new Date(year, month, day);
-      datesList.push(date.toISOString().slice(0, 10));
-    }
-
-    currentDate.setMonth(currentDate.getMonth() + 1);
-  }
-
-  return datesList;
-};
-
-const sixMonthsDates = getAllDaysWithinSixMonths();
-
-let dates: DateItem[] = sixMonthsDates.map((date) => ({
-  date,
-  calendars: [],
-}));
-
-// console.log(dates);
+const URI =
+  "mongodb+srv://sijinni:ddui2008@cluster1.qtpjdc7.mongodb.net/timeplifey?retryWrites=true&w=majority";
 
 const typeDefs = `#graphql
   type Calendar {
@@ -58,7 +18,6 @@ const typeDefs = `#graphql
     calendars: [Calendar!]!
   }
   type Query {
-    getAll: [Date!]!
     getDate(date: String!): Date!
   }
   type Mutation {
@@ -69,65 +28,66 @@ const typeDefs = `#graphql
       start: String!
       end: String!
       description: String!
-    ): Calendar!
+    ): Boolean!
     removeCalendar(date: String!, id: ID!): Boolean!
   }
 `;
 
 const resolvers = {
   Query: {
-    getAll(_: any) {
-      return dates;
-    },
-    getDate(_: any, { date }: any) {
-      const target = dates.find((data) => data.date === date);
+    async getDate(_: any, { date }: any) {
+      const client = await MongoClient.connect(URI);
+      const db = client.db();
+      const datesCollection = db.collection("dates_data");
 
-      if (!target) {
-        const newDate: DateItem = { date, calendars: [] };
-        dates.push(newDate);
-        dates.sort((a, b) => {
-          return new Date(a.date).getTime() - new Date(b.date).getTime();
-        });
+      const targetDate = await datesCollection.findOne({ date });
+
+      if (targetDate == null) {
+        const newDate = {
+          date,
+          calendars: [],
+        };
+
+        await datesCollection.insertOne(newDate);
+        client.close();
 
         return newDate;
       }
 
-      return target;
+      client.close();
+
+      return targetDate;
     },
   },
   Mutation: {
-    addCalendar(_: any, { date, id, title, start, end, description }: any) {
-      const targetDate: DateItem = dates.find((data) => data.date === date)!;
-      const originalCalendars = targetDate.calendars;
-      const newCalendar = { id, title, start, end, description };
+    async addCalendar(
+      _: any,
+      { date, id, title, start, end, description }: any
+    ) {
+      const client = await MongoClient.connect(URI);
+      const db = client.db();
+      const datesCollection = db.collection("dates_data");
 
-      dates[dates.indexOf(targetDate)].calendars = [
-        ...originalCalendars,
-        newCalendar,
-      ];
-      return newCalendar;
-    },
-    removeCalendar(_: any, { date, id }: any) {
-      const targetDate: DateItem = dates.find((data) => data.date === date)!;
-      const targetCalendar = targetDate.calendars.find(
-        (calendar) => calendar.id === id
+      await datesCollection.findOneAndUpdate(
+        { date },
+        { $push: { calendars: { id, title, start, end, description } as any } }
       );
 
-      if (!targetCalendar) {
-        return false;
-      }
+      client.close();
 
-      const otherDates = dates.filter((data) => data.date !== date);
+      return true;
+    },
+    async removeCalendar(_: any, { date, id }: any) {
+      const client = await MongoClient.connect(URI);
+      const db = client.db();
+      const datesCollection = db.collection("dates_data");
 
-      dates = [
-        ...otherDates,
-        {
-          date,
-          calendars: targetDate.calendars.filter(
-            (calendar) => calendar.id !== id
-          ),
-        },
-      ];
+      await datesCollection.findOneAndUpdate(
+        { date },
+        { $pull: { calendars: { id } as any } }
+      );
+
+      client.close();
 
       return true;
     },

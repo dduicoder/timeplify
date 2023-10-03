@@ -30,9 +30,7 @@ export const ADD_CALENDAR = gql`
       start: $start
       end: $end
       description: $description
-    ) {
-      title
-    }
+    )
   }
 `;
 
