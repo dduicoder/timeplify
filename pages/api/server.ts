@@ -1,6 +1,7 @@
 import { ApolloServer } from "@apollo/server";
 import { startServerAndCreateNextHandler } from "@as-integrations/next";
 import { MongoClient } from "mongodb";
+import { NextRequest, NextResponse } from "next/server";
 
 const URI =
   "mongodb+srv://sijinni:ddui2008@cluster1.qtpjdc7.mongodb.net/timeplifey?retryWrites=true&w=majority";
@@ -100,4 +101,28 @@ const server = new ApolloServer({
   introspection: true,
 });
 
-export default startServerAndCreateNextHandler(server);
+const handler = startServerAndCreateNextHandler(server, {
+  context: async (req, res) => ({ req, res }),
+});
+
+const allowCors = (fn: any) => async (req: any, res: any) => {
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  // res.setHeader("origin", "https://nextjs-graphql-server-client.vercel.app");
+  res.setHeader("Access-Control-Allow-Origin", req.headers.origin || "*");
+  // another common pattern
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET,OPTIONS,PATCH,DELETE,POST,PUT"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
+  );
+  if (req.method === "OPTIONS") {
+    res.status(200).end();
+    return;
+  }
+  await fn(req, res);
+};
+
+export default allowCors(handler);
