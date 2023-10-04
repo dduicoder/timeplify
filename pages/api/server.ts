@@ -36,6 +36,7 @@ const typeDefs = `#graphql
 const resolvers = {
   Query: {
     async getDate(_: any, { date }: any) {
+      console.log("HD");
       const client = await MongoClient.connect(URI);
       const db = client.db();
       const datesCollection = db.collection("dates_data");
@@ -100,4 +101,27 @@ const server = new ApolloServer({
   introspection: true,
 });
 
-export default startServerAndCreateNextHandler(server);
+const allowCors = (fn: any) => async (req: any, res: any) => {
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  // res.setHeader("Access-Control-Allow-Origin", req.headers.origin);
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET,OPTIONS,PATCH,DELETE,POST,PUT"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
+  );
+  if (req.method === "OPTIONS") {
+    res.status(200).end();
+    return;
+  }
+  await fn(req, res);
+};
+
+export default allowCors(
+  startServerAndCreateNextHandler(server, {
+    context: async (req, res) => ({ req, res }),
+  })
+);
