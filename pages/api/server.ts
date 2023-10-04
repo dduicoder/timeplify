@@ -1,7 +1,6 @@
 import { ApolloServer } from "@apollo/server";
 import { startServerAndCreateNextHandler } from "@as-integrations/next";
 import { MongoClient } from "mongodb";
-import { NextApiRequest, NextApiResponse } from "next";
 
 const URI =
   "mongodb+srv://sijinni:ddui2008@cluster1.qtpjdc7.mongodb.net/timeplifey?retryWrites=true&w=majority";
@@ -101,13 +100,4 @@ const server = new ApolloServer({
   introspection: true,
 });
 
-const handler = startServerAndCreateNextHandler(server);
-
-export default async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method === "OPTIONS") {
-    res.status(200).end();
-    return;
-  }
-  await handler(req, res);
-};
-// export default startServerAndCreateNextHandler(server);
+export default startServerAndCreateNextHandler(server);
