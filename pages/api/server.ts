@@ -1,6 +1,7 @@
 import { ApolloServer } from "@apollo/server";
 import { startServerAndCreateNextHandler } from "@as-integrations/next";
 import { MongoClient } from "mongodb";
+import { NextApiRequest, NextApiResponse } from "next";
 
 const URI =
   "mongodb+srv://sijinni:ddui2008@cluster1.qtpjdc7.mongodb.net/timeplifey?retryWrites=true&w=majority";
@@ -36,7 +37,6 @@ const typeDefs = `#graphql
 const resolvers = {
   Query: {
     async getDate(_: any, { date }: any) {
-      console.log("HD");
       const client = await MongoClient.connect(URI);
       const db = client.db();
       const datesCollection = db.collection("dates_data");
@@ -101,10 +101,14 @@ const server = new ApolloServer({
   introspection: true,
 });
 
-const allowCors = (fn: any) => async (req: any, res: any) => {
-  res.setHeader("Access-Control-Allow-Credentials", true);
+const handler = startServerAndCreateNextHandler(server, {
+  context: async (req, res) => ({ req, res }),
+});
+
+export default async (req: NextApiRequest, res: NextApiResponse) => {
+  console.log(req.headers);
+  res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader("Access-Control-Allow-Origin", "*");
-  // res.setHeader("Access-Control-Allow-Origin", req.headers.origin);
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET,OPTIONS,PATCH,DELETE,POST,PUT"
@@ -117,11 +121,6 @@ const allowCors = (fn: any) => async (req: any, res: any) => {
     res.status(200).end();
     return;
   }
-  await fn(req, res);
+  await handler(req, res);
 };
-
-export default allowCors(
-  startServerAndCreateNextHandler(server, {
-    context: async (req, res) => ({ req, res }),
-  })
-);
+// export default startServerAndCreateNextHandler(server);
