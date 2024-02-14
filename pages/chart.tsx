@@ -26,7 +26,7 @@ const ChartPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Chart - Timeplifey</title>
+        <title>Chart - Timeplify</title>
       </Head>
       <Chart xTotal={100} yTotal={24} datas={datas} />
     </>

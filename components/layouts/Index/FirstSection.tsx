@@ -33,7 +33,7 @@ const FirstSection: FC = () => {
             <button className="btn-flat">Calendar</button>
           </Link>
         </div>
-        <span>Learn about Timeplifey</span>
+        <span>Learn about Timeplify</span>
         <FontAwesomeIcon icon={faChevronDown} onClick={scrollHandler} />
       </div>
     </section>

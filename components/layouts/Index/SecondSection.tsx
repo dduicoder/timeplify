@@ -16,8 +16,8 @@ const SecondSection: FC = () => {
   const infoList = [
     {
       icon: faBarsProgress,
-      text: "Your own time manager, Timeplifey",
-      subText: "Manage your time with Timeplifey",
+      text: "Your own time manager, Timeplify",
+      subText: "Manage your time with Timeplify",
     },
     {
       icon: faClock,
@@ -27,7 +27,7 @@ const SecondSection: FC = () => {
     {
       icon: faCalendarCheck,
       text: "Everyday calendar",
-      subText: "Manage your daily schedule with Timeplifey Calendar",
+      subText: "Manage your daily schedule with Timeplify Calendar",
     },
   ];
 
@@ -85,7 +85,7 @@ const SecondSection: FC = () => {
     <section className={classes.second}>
       <div ref={setRef} className={classes.content}>
         <div className={classes["content__first"]}>
-          <h1>Use your time wisely with Timeplifey</h1>
+          <h1>Use your time wisely with Timeplify</h1>
           <ul className={classes["content__first-list"]}>
             {infoList.map(({ icon, text, subText }, i) => (
               <li

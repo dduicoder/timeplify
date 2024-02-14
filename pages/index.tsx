@@ -8,7 +8,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Timeplifey</title>
+        <title>Timeplify</title>
       </Head>
       <FirstSection />
       <SecondSection />

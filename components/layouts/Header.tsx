@@ -18,7 +18,7 @@ const Header: FC = () => {
     <header className={classes.header}>
       <Link href="/">
         <FontAwesomeIcon icon={faClock} />
-        <span>Timeplifey</span>
+        <span>Timeplify</span>
       </Link>
       <nav className={classes.nav}>
         <Link legacyBehavior href="/pomodoro">

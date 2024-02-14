@@ -123,7 +123,7 @@ const Pomodoro: FC = () => {
   return (
     <>
       <Head>
-        <title>{`${minutes} ${statusText} - Timeplifey`}</title>
+        <title>{`${minutes} ${statusText} - Timeplify`}</title>
       </Head>
       <PomodoroModal show={showModal} close={() => setShowModal(false)} />
       <section className={classes.pomodoro}>

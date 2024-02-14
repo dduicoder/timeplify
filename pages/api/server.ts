@@ -3,7 +3,7 @@ import { startServerAndCreateNextHandler } from "@as-integrations/next";
 import { MongoClient } from "mongodb";
 
 const URI =
-  "mongodb+srv://sijinni:ddui2008@cluster1.qtpjdc7.mongodb.net/timeplifey?retryWrites=true&w=majority";
+  "mongodb+srv://sijinni:ddui2008@cluster1.qtpjdc7.mongodb.net/timeplify?retryWrites=true&w=majority";
 
 const typeDefs = `#graphql
   type Calendar {

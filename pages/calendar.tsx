@@ -7,7 +7,7 @@ const CalendarPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Calendar - Timeplifey</title>
+        <title>Calendar - Timeplify</title>
       </Head>
       <Calendar />
     </>
