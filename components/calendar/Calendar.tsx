@@ -8,8 +8,18 @@ import CalendarModal from "./CalendarModal";
 
 import classes from "./Calendar.module.scss";
 
+const NULL_CALENDAR = {
+  id: "",
+  title: "",
+  start: "",
+  end: "",
+  description: "",
+};
+
 const Calendar: FC = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [targetCalendar, setTargetCalendar] =
+    useState<CalendarType>(NULL_CALENDAR);
   const [date, setDate] = useState<Date>(new Date());
 
   const dateText = date.toISOString().slice(0, 10);
@@ -46,6 +56,13 @@ const Calendar: FC = () => {
     });
   };
 
+  const editCalendarHandler = (id: string) => {
+    setTargetCalendar(
+      calendars.find((calendar) => calendar.id === id) as CalendarType
+    );
+    setShowModal(true);
+  };
+
   const removeCalendarHandler = (id: string) => {
     removeCalendar({ variables: { date: dateText, id } });
   };
@@ -68,8 +85,7 @@ const Calendar: FC = () => {
   const today = new Date();
 
   const isToday =
-    date.toISOString().slice(0, 10).split("-").join("") ===
-    today.toISOString().slice(0, 10).split("-").join("");
+    date.toISOString().slice(0, 10) === today.toISOString().slice(0, 10);
 
   const dayFormatText = formatter.format(
     Math.ceil((date.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)),
@@ -79,8 +95,14 @@ const Calendar: FC = () => {
   return (
     <>
       <CalendarModal
+        initCalendar={targetCalendar}
         show={showModal}
-        close={() => setShowModal(false)}
+        close={(edited) => {
+          if (edited) {
+            removeCalendarHandler(targetCalendar.id);
+          }
+          setShowModal(false);
+        }}
         onAddCalendar={addCalendarHandler}
       />
       <section>
@@ -105,6 +127,7 @@ const Calendar: FC = () => {
                   key={item.id}
                   isToday={isToday}
                   calendar={item}
+                  onEditCalendar={editCalendarHandler}
                   onDeleteCalendar={removeCalendarHandler}
                 />
               ))}
@@ -112,7 +135,13 @@ const Calendar: FC = () => {
           </>
         )}
         <div className={classes.action}>
-          <button className="btn-flat" onClick={() => setShowModal(true)}>
+          <button
+            className="btn-flat"
+            onClick={() => {
+              setTargetCalendar(NULL_CALENDAR);
+              setShowModal(true);
+            }}
+          >
             New Calendar
           </button>
         </div>

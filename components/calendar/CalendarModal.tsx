@@ -10,29 +10,39 @@ import Portal from "../UI/Portal";
 import classes from "./CalendarModal.module.scss";
 
 type PropsType = {
+  initCalendar: CalendarType;
   show: boolean;
-  close: () => void;
+  close: (edited: boolean) => void;
   onAddCalendar: (data: CalendarType) => void;
 };
 
-const CalendarModal = ({ show, close, onAddCalendar }: PropsType) => {
+const CalendarModal = ({
+  initCalendar,
+  show,
+  close,
+  onAddCalendar,
+}: PropsType) => {
   const ref = useRef<HTMLDivElement>(null);
 
-  const [showTime, setShowTime] = useState<boolean>(true);
-
+  const isEdit = initCalendar.id !== "";
+  
+  const [showTime, setShowTime] = useState<boolean>(!(isEdit && initCalendar.start === ""));
+  
   const notice = useNotification();
-
+  
   useEffect(() => {
+    setShowTime(!(isEdit && initCalendar.start === ""))
+
     window.onkeydown = (event) => {
       if (event.key === "Escape") {
-        close();
+        close(false);
       }
     };
 
     return () => {
       window.onkeydown = null;
     };
-  }, [close]);
+  }, [setShowTime, close]);
 
   const submitHandler = (event: SyntheticEvent) => {
     event.preventDefault();
@@ -86,10 +96,12 @@ const CalendarModal = ({ show, close, onAddCalendar }: PropsType) => {
 
     notice({
       type: "SUCCESS",
-      message: `Calendar made! (${title})`,
+      message: isEdit
+        ? `Calendar edited! (${title})`
+        : `Calendar made! (${title})`,
     });
 
-    close();
+    close(true);
   };
 
   const checkboxChangeHandler = (event: SyntheticEvent) => {
@@ -100,7 +112,7 @@ const CalendarModal = ({ show, close, onAddCalendar }: PropsType) => {
 
   return (
     <>
-      <Backdrop show={show} close={close} />
+      <Backdrop show={show} close={() => close(false)} />
       <Portal query=".overlays">
         <CSSTransition
           nodeRef={ref}
@@ -116,11 +128,17 @@ const CalendarModal = ({ show, close, onAddCalendar }: PropsType) => {
           <div ref={ref} className={classes.modal}>
             <div className={classes.control}>
               <h1>New Calendar</h1>
-              <FontAwesomeIcon icon={faXmark} onClick={close} />
+              <FontAwesomeIcon icon={faXmark} onClick={() => close(false)} />
             </div>
             <form onSubmit={submitHandler}>
               <label htmlFor="calendar-title">Title</label>
-              <input type="title" name="title" id="calendar-title" autoFocus />
+              <input
+                type="title"
+                name="title"
+                id="calendar-title"
+                defaultValue={isEdit ? initCalendar.title : ""}
+                autoFocus
+              />
               <label htmlFor="calendar-time">Time</label>
               <input
                 type="checkbox"
@@ -130,18 +148,33 @@ const CalendarModal = ({ show, close, onAddCalendar }: PropsType) => {
               />
               <div style={{ display: showTime ? "block" : "none" }}>
                 <label htmlFor="calendar-start">Start time</label>
-                <input type="time" name="start" id="calendar-start" />
+                <input
+                  type="time"
+                  name="start"
+                  id="calendar-start"
+                  defaultValue={isEdit ? initCalendar.start : ""}
+                />
                 <label htmlFor="calendar-end">End time</label>
-                <input type="time" name="end" id="calendar-end" />
+                <input
+                  type="time"
+                  name="end"
+                  id="calendar-end"
+                  defaultValue={isEdit ? initCalendar.end : ""}
+                />
               </div>
               <label htmlFor="calendar-description">Description</label>
               <textarea
                 name="description"
                 id="calendar-description"
                 rows={5}
+                defaultValue={isEdit ? initCalendar.description : ""}
               ></textarea>
               <div className={classes.action}>
-                <button className="btn" type="button" onClick={close}>
+                <button
+                  className="btn"
+                  type="button"
+                  onClick={() => close(false)}
+                >
                   Cancel
                 </button>
                 <button className="btn-flat">Add calendar</button>

@@ -2,13 +2,14 @@ import { useState, useEffect, FC, SyntheticEvent } from "react";
 import { useNotification } from "../notification/NotificationProvider";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faX, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faX, faEdit } from "@fortawesome/free-solid-svg-icons";
 
 import classes from "./CalendarItem.module.scss";
 
 type PropsType = {
   isToday: boolean;
   calendar: CalendarType;
+  onEditCalendar: (id: string) => void;
   onDeleteCalendar: (id: string) => void;
 };
 
@@ -41,6 +42,7 @@ const getProgressAndMinutes = (
 const CalendarItem: FC<PropsType> = ({
   isToday,
   calendar,
+  onEditCalendar,
   onDeleteCalendar,
 }) => {
   const [show, setShow] = useState<boolean>(true);
@@ -68,6 +70,12 @@ const CalendarItem: FC<PropsType> = ({
       return () => clearInterval(interval);
     }
   });
+
+  const editCalendarHandler = (event: SyntheticEvent) => {
+    event.stopPropagation();
+
+    onEditCalendar(id);
+  };
 
   const removeCalendarHandler = (event: SyntheticEvent) => {
     event.stopPropagation();
@@ -106,12 +114,12 @@ const CalendarItem: FC<PropsType> = ({
           <span>{isTimeItem && `${start} ~ ${end}`}</span>
         </div>
         <div className={classes.action}>
+          <button onClick={editCalendarHandler} className="btn">
+            <FontAwesomeIcon icon={faEdit} />
+          </button>
           <button onClick={removeCalendarHandler} className="btn-flat">
             <FontAwesomeIcon icon={faX} />
           </button>
-          {/* <button className="btn-flat">
-          <FontAwesomeIcon icon={faCheck} />
-        </button> */}
         </div>
       </div>
       {showDescription && (
