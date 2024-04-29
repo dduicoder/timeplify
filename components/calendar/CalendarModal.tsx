@@ -12,8 +12,9 @@ import classes from "./CalendarModal.module.scss";
 type PropsType = {
   initCalendar: CalendarType;
   show: boolean;
-  close: (edited: boolean) => void;
+  close: () => void;
   onAddCalendar: (data: CalendarType) => void;
+  onUpdateCalendar: (data: CalendarType) => void;
 };
 
 const CalendarModal = ({
@@ -21,21 +22,24 @@ const CalendarModal = ({
   show,
   close,
   onAddCalendar,
+  onUpdateCalendar,
 }: PropsType) => {
   const ref = useRef<HTMLDivElement>(null);
 
-  const isEdit = initCalendar.id !== "";
-  
-  const [showTime, setShowTime] = useState<boolean>(!(isEdit && initCalendar.start === ""));
-  
+  const isUpdate = initCalendar.id !== "";
+
+  const [showTime, setShowTime] = useState<boolean>(
+    !(isUpdate && initCalendar.start === "")
+  );
+
   const notice = useNotification();
-  
+
   useEffect(() => {
-    setShowTime(!(isEdit && initCalendar.start === ""))
+    setShowTime(!(isUpdate && initCalendar.start === ""));
 
     window.onkeydown = (event) => {
       if (event.key === "Escape") {
-        close(false);
+        close();
       }
     };
 
@@ -86,22 +90,32 @@ const CalendarModal = ({
       return;
     }
 
-    onAddCalendar({
-      id: crypto.randomUUID(),
-      title,
-      start,
-      end,
-      description,
-    });
-
+    console.log(isUpdate);
+    if (isUpdate) {
+      onUpdateCalendar({
+        id: initCalendar.id,
+        title,
+        start,
+        end,
+        description,
+      });
+    } else {
+      onAddCalendar({
+        id: crypto.randomUUID(),
+        title,
+        start,
+        end,
+        description,
+      });
+    }
     notice({
       type: "SUCCESS",
-      message: isEdit
-        ? `Calendar edited! (${title})`
+      message: isUpdate
+        ? `Calendar updated! (${title})`
         : `Calendar made! (${title})`,
     });
 
-    close(true);
+    close();
   };
 
   const checkboxChangeHandler = (event: SyntheticEvent) => {
@@ -112,7 +126,7 @@ const CalendarModal = ({
 
   return (
     <>
-      <Backdrop show={show} close={() => close(false)} />
+      <Backdrop show={show} close={() => close()} />
       <Portal query=".overlays">
         <CSSTransition
           nodeRef={ref}
@@ -128,7 +142,7 @@ const CalendarModal = ({
           <div ref={ref} className={classes.modal}>
             <div className={classes.control}>
               <h1>New Calendar</h1>
-              <FontAwesomeIcon icon={faXmark} onClick={() => close(false)} />
+              <FontAwesomeIcon icon={faXmark} onClick={() => close()} />
             </div>
             <form onSubmit={submitHandler}>
               <label htmlFor="calendar-title">Title</label>
@@ -136,7 +150,7 @@ const CalendarModal = ({
                 type="title"
                 name="title"
                 id="calendar-title"
-                defaultValue={isEdit ? initCalendar.title : ""}
+                defaultValue={isUpdate ? initCalendar.title : ""}
                 autoFocus
               />
               <label htmlFor="calendar-time">Time</label>
@@ -152,14 +166,14 @@ const CalendarModal = ({
                   type="time"
                   name="start"
                   id="calendar-start"
-                  defaultValue={isEdit ? initCalendar.start : ""}
+                  defaultValue={isUpdate ? initCalendar.start : ""}
                 />
                 <label htmlFor="calendar-end">End time</label>
                 <input
                   type="time"
                   name="end"
                   id="calendar-end"
-                  defaultValue={isEdit ? initCalendar.end : ""}
+                  defaultValue={isUpdate ? initCalendar.end : ""}
                 />
               </div>
               <label htmlFor="calendar-description">Description</label>
@@ -167,14 +181,10 @@ const CalendarModal = ({
                 name="description"
                 id="calendar-description"
                 rows={5}
-                defaultValue={isEdit ? initCalendar.description : ""}
+                defaultValue={isUpdate ? initCalendar.description : ""}
               ></textarea>
               <div className={classes.action}>
-                <button
-                  className="btn"
-                  type="button"
-                  onClick={() => close(false)}
-                >
+                <button className="btn" type="button" onClick={() => close()}>
                   Cancel
                 </button>
                 <button className="btn-flat">Add calendar</button>

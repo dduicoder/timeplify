@@ -39,3 +39,23 @@ export const REMOVE_CALENDAR = gql`
     removeCalendar(date: $date, id: $id)
   }
 `;
+
+export const UPDATE_CALENDAR = gql`
+  mutation updateCalendar(
+    $date: String!
+    $id: ID!
+    $title: String!
+    $start: String!
+    $end: String!
+    $description: String!
+  ) {
+    updateCalendar(
+      date: $date
+      id: $id
+      title: $title
+      start: $start
+      end: $end
+      description: $description
+    )
+  }
+`;

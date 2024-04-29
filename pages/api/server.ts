@@ -30,6 +30,14 @@ const typeDefs = `#graphql
       description: String!
     ): Boolean!
     removeCalendar(date: String!, id: ID!): Boolean!
+    updateCalendar(
+      date: String!
+      id: ID!
+      title: String!
+      start: String!
+      end: String!
+      description: String!
+    ): Boolean!
   }
 `;
 
@@ -85,6 +93,30 @@ const resolvers = {
       await datesCollection.findOneAndUpdate(
         { date },
         { $pull: { calendars: { id } as any } }
+      );
+
+      client.close();
+
+      return true;
+    },
+    async updateCalendar(
+      _: any,
+      { date, id, title, start, end, description }: any
+    ) {
+      const client = await MongoClient.connect(URI);
+      const db = client.db();
+      const datesCollection = db.collection("dates_data");
+
+      const targetDate: any = await datesCollection.findOne({ date });
+
+      const newCalendar = targetDate.calendars.filter(
+        (calendar: any) => calendar.id !== id
+      );
+      newCalendar.push({ id, title, start, end, description });
+
+      await datesCollection.findOneAndUpdate(
+        { date },
+        { $set: { calendars: newCalendar } }
       );
 
       client.close();

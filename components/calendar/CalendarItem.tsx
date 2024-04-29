@@ -9,7 +9,7 @@ import classes from "./CalendarItem.module.scss";
 type PropsType = {
   isToday: boolean;
   calendar: CalendarType;
-  onEditCalendar: (id: string) => void;
+  onUpdateCalendar: (id: string) => void;
   onDeleteCalendar: (id: string) => void;
 };
 
@@ -42,7 +42,7 @@ const getProgressAndMinutes = (
 const CalendarItem: FC<PropsType> = ({
   isToday,
   calendar,
-  onEditCalendar,
+  onUpdateCalendar,
   onDeleteCalendar,
 }) => {
   const [show, setShow] = useState<boolean>(true);
@@ -71,10 +71,10 @@ const CalendarItem: FC<PropsType> = ({
     }
   });
 
-  const editCalendarHandler = (event: SyntheticEvent) => {
+  const updateCalendarHandler = (event: SyntheticEvent) => {
     event.stopPropagation();
 
-    onEditCalendar(id);
+    onUpdateCalendar(id);
   };
 
   const removeCalendarHandler = (event: SyntheticEvent) => {
@@ -114,7 +114,7 @@ const CalendarItem: FC<PropsType> = ({
           <span>{isTimeItem && `${start} ~ ${end}`}</span>
         </div>
         <div className={classes.action}>
-          <button onClick={editCalendarHandler} className="btn">
+          <button onClick={updateCalendarHandler} className="btn">
             <FontAwesomeIcon icon={faEdit} />
           </button>
           <button onClick={removeCalendarHandler} className="btn-flat">

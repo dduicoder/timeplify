@@ -1,6 +1,11 @@
 import { FC, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
-import { GET_DATE, ADD_CALENDAR, REMOVE_CALENDAR } from "../../graphql/querys";
+import {
+  GET_DATE,
+  ADD_CALENDAR,
+  REMOVE_CALENDAR,
+  UPDATE_CALENDAR,
+} from "../../graphql/querys";
 
 import { Calendar as ReactCalendar } from "react-calendar";
 import CalendarItem from "./CalendarItem";
@@ -50,21 +55,29 @@ const Calendar: FC = () => {
     ],
   });
 
+  const [updateCalendar] = useMutation(UPDATE_CALENDAR, {
+    refetchQueries: [
+      {
+        query: GET_DATE,
+        variables: { date: dateText },
+      },
+    ],
+  });
+
   const addCalendarHandler = (data: CalendarType) => {
     addCalendar({
       variables: { date: dateText, ...data },
     });
   };
 
-  const editCalendarHandler = (id: string) => {
-    setTargetCalendar(
-      calendars.find((calendar) => calendar.id === id) as CalendarType
-    );
-    setShowModal(true);
-  };
-
   const removeCalendarHandler = (id: string) => {
     removeCalendar({ variables: { date: dateText, id } });
+  };
+
+  const updateCalendarHandler = (data: CalendarType) => {
+    updateCalendar({
+      variables: { date: dateText, ...data },
+    });
   };
 
   const calendarChangeHandler = (newDate: Date) => {
@@ -97,13 +110,11 @@ const Calendar: FC = () => {
       <CalendarModal
         initCalendar={targetCalendar}
         show={showModal}
-        close={(edited) => {
-          if (edited) {
-            removeCalendarHandler(targetCalendar.id);
-          }
+        close={() => {
           setShowModal(false);
         }}
         onAddCalendar={addCalendarHandler}
+        onUpdateCalendar={updateCalendarHandler}
       />
       <section>
         <ReactCalendar
@@ -113,11 +124,11 @@ const Calendar: FC = () => {
         />
       </section>
       <section>
+        <h1>{`${dayFormatText} (${date.toLocaleDateString()})`}</h1>
         {loading ? (
           <div style={{ marginTop: "2rem" }} className="loading-spinner" />
         ) : (
           <>
-            <h1>{`${dayFormatText} (${date.toLocaleDateString()})`}</h1>
             {calendars.length === 0 && (
               <p className={classes.error}>- No Calendars -</p>
             )}
@@ -127,7 +138,14 @@ const Calendar: FC = () => {
                   key={item.id}
                   isToday={isToday}
                   calendar={item}
-                  onEditCalendar={editCalendarHandler}
+                  onUpdateCalendar={() => {
+                    setTargetCalendar(
+                      calendars.find(
+                        (calendar) => calendar.id === item.id
+                      ) as CalendarType
+                    );
+                    setShowModal(true);
+                  }}
                   onDeleteCalendar={removeCalendarHandler}
                 />
               ))}
